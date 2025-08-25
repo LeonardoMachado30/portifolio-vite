@@ -1,0 +1,46 @@
+@import 'tailwindcss';
+/* @import "material-icons/iconfont/material-icons.scss"; */
+/* @import 'material-icons/iconfont/filled.css';
+@import 'material-icons/iconfont/outlined.css'; */
+@import './colors.scss';
+
+body,
+#root {
+  height: 100vh;
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100px);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInTop {
+  from {
+    transform: translateY(100px);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    transform: translateY(-100px);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
