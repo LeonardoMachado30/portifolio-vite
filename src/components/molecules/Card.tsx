@@ -8,7 +8,7 @@ const Card: React.FC<{
   style?: CSSProperties;
 }> = ({ title, children, classNameContent, classNameContainer, style }) => (
   <div
-    className={`bg-secondary-500 rounded-lg shadow-md shadow-white px-4 py-4 text-success-500 hover:scale-[1.01] transition-all duration-150  ${classNameContainer}`}
+    className={`border-2 bg-white rounded-lg shadow-md px-4 py-4 text-secondary-500 hover:scale-[1.01] transition-all duration-150  ${classNameContainer}`}
     style={style}
   >
     {title && (

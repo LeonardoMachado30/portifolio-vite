@@ -31,8 +31,8 @@ export function Info() {
 
   return (
     <Card
-      classNameContainer=" hidden lg:block h-full min-w-[280px] min-h-[400px] max-h-[400px]"
-      classNameContent="flex flex-col gap-4 justify-center"
+      classNameContainer="hidden lg:block min-w-[280px] !bg-transparent mb-60"
+      classNameContent="flex gap-4 justify-between items-center text-white"
       style={{
         animation:
           'slideInLeft 1s cubic-bezier(0.4,0,0.2,1) forwards, fadeIn 1.4s linear forwards',
@@ -42,7 +42,7 @@ export function Info() {
       <img
         src={imgPerfil}
         alt="Minha Foto"
-        className="w-32 h-32 rounded-full object-cover border-4 border-priamry-300 self-center"
+        className="w-50 h-50 rounded-full object-cover border-4 border-priamry-300 self-center"
       />
       <h2
         className={`
