@@ -42,11 +42,11 @@ function BotaoTopoNeon() {
       onClick={irParaTopo}
       style={{
         position: 'fixed',
-        right: '2rem',
-        bottom: '2rem',
+        right: '1rem',
+        bottom: '1rem',
         zIndex: 1000,
-        padding: '1rem 1.5rem',
-        fontSize: '1.2rem',
+        padding: '0.5rem',
+        fontSize: '0.8rem',
         color: '#fff',
         background: '#111',
         border: 'none',
@@ -59,7 +59,7 @@ function BotaoTopoNeon() {
       }}
       aria-label="Ir para o topo"
     >
-      ↑
+      <span className="material-icons-outlined text-[10px]">arrow_upward</span>
     </button>
   );
 }
@@ -209,18 +209,16 @@ export function Exemplo() {
 
   // Funções para aplicar efeito neon no h1 inteiro ao passar o mouse
   const handleH1MouseEnter = (e: React.MouseEvent<HTMLHeadingElement>) => {
-    console.log(e);
     neonWelcome.onMouseEnter(e);
   };
   const handleH1MouseLeave = (e: React.MouseEvent<HTMLHeadingElement>) => {
-    console.log(e);
     neonWelcome.onMouseLeave(e);
   };
 
   return (
     <>
       <header
-        className="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-8 py-4 "
+        className="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-4 sm:px-8 py-3 sm:py-4"
         style={{
           backdropFilter: 'blur(16px)',
           background: 'rgba(30, 41, 59, 0.45)',
@@ -229,28 +227,30 @@ export function Exemplo() {
           WebkitBackdropFilter: 'blur(16px)',
         }}
       >
-        <div className="flex items-center justify-between mx-auto max-w-[1240px] w-full">
-          <div className="flex items-center gap-3">
-            <span className="text-xl font-bold text-cyan-200 drop-shadow">
-              Flávio Leonardo Machado de Pádua
+        <div className="flex items-center justify-between mx-auto max-w-full sm:max-w-[1240px] w-full">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <span className="text-base sm:text-xl font-bold text-cyan-200 drop-shadow whitespace-nowrap">
+              Flávio Leonardo{' '}
+              <span className="hidden md:block">Machado de Pádua</span>
+              <span className="block md:hidden">M. de P.</span>
             </span>
           </div>
-          <nav className="flex gap-6">
+          <nav className="flex gap-3 sm:gap-6">
             <a
               href="#hero"
-              className="text-cyan-100 hover:text-cyan-300 font-medium transition"
+              className="text-cyan-100 hover:text-cyan-300 font-medium transition text-sm sm:text-base"
             >
               Início
             </a>
             <a
               href="#sobre"
-              className="text-cyan-100 hover:text-cyan-300 font-medium transition"
+              className="text-cyan-100 hover:text-cyan-300 font-medium transition text-sm sm:text-base"
             >
               Sobre
             </a>
             <a
               href="#projetos"
-              className="text-cyan-100 hover:text-cyan-300 font-medium transition"
+              className="text-cyan-100 hover:text-cyan-300 font-medium transition text-sm sm:text-base"
             >
               Projetos
             </a>
@@ -265,14 +265,14 @@ export function Exemplo() {
 
       <BotaoTopoNeon />
 
-      <div className="p-4 sm:p-8 space-y-24">
+      <div className="p-2 sm:p-4 md:p-8 space-y-16 sm:space-y-24">
         <section
           id="hero"
-          className={`flex flex-col md:flex-row items-center justify-center text-center md:text-left min-h-screen left-[-200px] relative`}
+          className={`flex flex-col md:flex-row items-center justify-center text-center md:text-left min-h-screen relative`}
         >
-          <div className="w-full md:w-1/2 flex justify-center md:justify-end pr-0 md:pr-12 mb-8 md:mb-0 ">
+          <div className="w-full md:w-1/2 flex justify-center md:justify-end pr-0 md:pr-12 mb-20 md:mb-0">
             <div
-              className="w-40 h-40 md:w-64 md:h-64 flex items-center justify-center"
+              className="w-32 h-32 sm:w-40 sm:h-40 md:w-64 md:h-64 flex items-center justify-center"
               style={{
                 background: 'transparent',
                 position: 'relative',
@@ -283,23 +283,26 @@ export function Exemplo() {
                 style={{
                   background: 'transparent',
                   transform: 'scaleX(-1)',
+                  maxWidth: '100%',
+                  height: 'auto',
                   filter:
                     'drop-shadow(0 0 5px #0ff) drop-shadow(0 0 8px #0ff) drop-shadow(0 0 20px #0ff) drop-shadow(0 0 25px #0ff)',
                 }}
-                width={600}
-                height={600}
+                width={320}
+                height={320}
                 src="/profile-sem-fundo.png"
                 alt="Foto de perfil do desenvolvedor sem fundo"
               />
             </div>
           </div>
-          <div className="w-full md:w-1/2">
+          <div className="w-full md:w-1/2 px-2 sm:px-0">
             <h1
-              className="text-4xl sm:text-5xl lg:text-6xl  font-extrabold text-shadow-2xs leading-tight font-BitcountGridDouble-ExtraLight"
+              className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-shadow-2xs leading-tight font-BitcountGridDouble-ExtraLight"
               style={{
                 transition: 'text-shadow 0.2s, color 0.2s',
                 letterSpacing: '1px',
                 userSelect: 'none',
+                wordBreak: 'break-word',
               }}
             >
               {fraseH1.split('').map((letra, idx) => {
@@ -326,13 +329,13 @@ export function Exemplo() {
                 {/* Flávio já incluso acima */}
               </span>
             </h1>
-            <p className="mt-4 text-lg text-gray-200 max-w-lg mx-auto md:mx-0">
+            <p className="mt-3 sm:mt-4 text-base sm:text-lg text-gray-200 max-w-full sm:max-w-lg mx-auto md:mx-0">
               Desenvolvedor de Sistemas apaixonada por criar soluções inovadoras
               e eficientes que impactam positivamente a vida das pessoas.
             </p>
             <a
               href="#projetos"
-              className="mt-12 inline-block !text-[#0ff] font-bold py-3 px-8 rounded-full shadow-xl  bg-black text-shadow-primary box-shadow-primary neon-pulse"
+              className="mt-8 sm:mt-12 inline-block !text-[#0ff] font-bold py-2 sm:py-3 px-6 sm:px-8 rounded-full shadow-xl bg-black text-shadow-primary box-shadow-primary neon-pulse text-sm sm:text-base"
               style={{
                 transition: 'text-shadow 0.4s, color 0.4s, transform 0.4s',
               }}
@@ -347,27 +350,27 @@ export function Exemplo() {
         <section
           id="sobre"
           ref={sobreRef}
-          className={`mb-60 w-full flex justify-center items-center ${
+          className={`mb-32 sm:mb-60 w-full flex justify-center items-center ${
             sobreVisible ? 'move-top-appear' : 'move-top-disappear'
           }`}
         >
-          <div className="w-full max-w-3xl rounded-2xl shadow-lg bg-[#181c20] border border-cyan-400/40 overflow-hidden">
+          <div className="w-full max-w-full sm:max-w-3xl rounded-2xl shadow-lg bg-[#181c20] border border-cyan-400/40 overflow-hidden mx-1 sm:mx-0">
             {/* Barra do título do terminal */}
-            <div className="flex items-center justify-between px-4 py-2 bg-[#23272e] border-b border-cyan-400/30">
-              <div className="flex items-center gap-2">
+            <div className="flex items-center justify-between px-2 sm:px-4 py-2 bg-[#23272e] border-b border-cyan-400/30">
+              <div className="flex items-center gap-1 sm:gap-2">
                 <span className="w-3 h-3 rounded-full bg-red-500 inline-block"></span>
                 <span className="w-3 h-3 rounded-full bg-yellow-400 inline-block"></span>
                 <span className="w-3 h-3 rounded-full bg-green-500 inline-block"></span>
               </div>
-              <span className="text-cyan-300 font-bold text-lg select-none">
+              <span className="text-cyan-300 font-bold text-base sm:text-lg select-none">
                 Sobre mim
               </span>
-              <span className="w-8"></span>
+              <span className="w-6 sm:w-8"></span>
             </div>
             {/* Corpo do terminal */}
-            <div className="px-6 py-8 font-mono text-lg text-cyan-200 min-h-[220px] bg-[#181c20]">
+            <div className="px-3 sm:px-6 py-6 sm:py-8 font-mono text-base sm:text-lg text-cyan-200 min-h-[180px] sm:min-h-[220px] bg-[#181c20]">
               <div className="flex items-center">
-                <span className="text-cyan-400 font-bold">
+                <span className="text-cyan-400 font-bold text-xs sm:text-base">
                   C:/flavio/sobre-mim:
                 </span>
                 <span
@@ -381,20 +384,20 @@ export function Exemplo() {
               </div>
               {/* Texto de apresentação aparece com fade após foco */}
               <div
-                className={`mt-6 transition-opacity duration-700 ${
+                className={`mt-4 sm:mt-6 transition-opacity duration-700 ${
                   sobreVisible ? 'opacity-100' : 'opacity-0'
                 }`}
                 tabIndex={sobreVisible ? 0 : -1}
                 aria-live="polite"
               >
-                <p className="mb-4 text-gray-100 tagesschrift-regular">
+                <p className="mb-3 sm:mb-4 text-gray-100 tagesschrift-regular text-xs sm:text-base">
                   Desde que escrevi minha primeira linha de código, me apaixonei
                   pelo poder de transformar ideias complexas em realidade
                   digital. Tenho experiência em desenvolvimento web e mobile,
                   com foco em tecnologias como JavaScript, React, Node.js e
                   bancos de dados como MongoDB e PostgreSQL.
                 </p>
-                <p className="text-gray-100 tagesschrift-regular">
+                <p className="text-gray-100 tagesschrift-regular text-xs sm:text-base">
                   Meu objetivo é sempre aprender e crescer, buscando desafios
                   que me permitam aplicar e expandir meu conhecimento. Acredito
                   que a tecnologia pode ser uma ferramenta de mudança e estou
@@ -407,62 +410,78 @@ export function Exemplo() {
         </section>
 
         {/* Timeline de Experiências */}
-        <section id="timeline" className="relative max-w-3xl mx-auto py-16">
+        <section
+          id="timeline"
+          className="relative max-w-full sm:max-w-3xl mx-auto py-10 sm:py-16 px-1 sm:px-0"
+        >
           <h2
-            className="text-5xl font-bold text-center mb-12 text-gradient text-primary font-BitcountGridDouble-ExtraLight"
+            className="text-3xl sm:text-5xl font-bold text-center mb-8 sm:mb-12 text-gradient text-primary font-BitcountGridDouble-ExtraLight"
             style={{
               letterSpacing: '2px',
-              lineHeight: '54px',
+              lineHeight: '1.2',
             }}
           >
             Experiências
           </h2>
 
-          <div className="relative border-l-4 border-cyan-400 ml-6">
+          <div className="relative border-l-2 sm:border-l-4 border-cyan-400 ml-3 sm:ml-6">
             {[
               {
                 titulo: 'Desenvolvedor Full-Stack',
                 empresa: 'AURA R&S LABS',
-                periodo: 'Mai/2024 – Atual',
+                periodo: (function () {
+                  const inicio = new Date(2025, 4, 1);
+                  const agora = new Date();
+                  let meses =
+                    (agora.getFullYear() - inicio.getFullYear()) * 12 +
+                    (agora.getMonth() - inicio.getMonth());
+                  if (agora.getDate() < inicio.getDate()) {
+                    meses--;
+                  }
+                  meses = Math.max(0, meses + 1);
+                  return `Mai/2025 – Atual - ${meses} ${meses === 1 ? 'mês' : 'meses'}`;
+                })(),
                 descricao:
                   'Desenvolvimento de CRM + ATS utilizando React.js, Next.js, Tailwindcss, Prisma, TypeScript, Postgres; Implementação de arquitetura modular, validações, autenticação segura JWT e integrações com datastone com APIs REST; Aplicação de testes automatizados e unitários e otimização de performance para garantir escalabilidade com Jest e Storybook;',
               },
               {
                 titulo: 'Desenvolvedor Full-Stack',
                 empresa: 'Grupo LAPM | Brasília/DF',
-                periodo: 'Fev/2024 – Mar/2025',
+                periodo: 'Fev/2024 – Mar/2025 - 1 ano e 1 mês',
                 descricao:
                   'Desenvolvimento de gerenciador de contratos imobiliários utilizando Vue 2 e 3 (composition API), TypeScript, Laravel e MySQL; Liderança técnica da migração Vue 2 para o Vue 3 composition API, obtendo aumento de 60% na performance e maior manutenibilidade; Migração da biometria facial de Python no back-end para TensorFlow no front-end Vue, reduzindo custos de servidor em 4%;',
               },
               {
                 titulo: 'Desenvolvedor Front-End',
                 empresa: 'Trabalha Brasil | Remoto',
-                periodo: 'Jun/2021 – Jan/2023',
+                periodo: 'Jun/2021 – Jan/2023 - 1 ano e 10 meses',
                 descricao:
                   'Desenvolvimento de job board / portal de empregos utilizando HTML, CSS, JavaScript 6+, Jquery, .NET Framework/Core, (i18n) e consumo de APIs REST; Participação em hackathon interno, garantindo promoção após 3 meses de estágio; Migração do Jquery 2.2 para 3.7 resultando em 20% mais performance e resolvido vulnerabilidades;',
               },
             ].map((exp, idx) => (
               <div
                 key={idx}
-                className="mb-12 last:mb-0 relative"
+                className="mb-8 sm:mb-12 last:mb-0 relative"
                 style={{
                   opacity: 0,
                   animation: `fadeInTimeline 1s ease forwards`,
                   animationDelay: `${idx + 1}s`,
                 }}
               >
-                <span className="absolute -left-7 top-2 w-5 h-5 bg-cyan-400 rounded-full border-4 border-white shadow-lg"></span>
-                <div className="ml-8 bg-gray-900 bg-opacity-80 rounded-xl p-6 shadow-lg">
-                  <h3 className="text-2xl font-bold text-cyan-300 mb-1">
+                <span className="absolute -left-5 sm:-left-7 top-2 w-4 h-4 sm:w-5 sm:h-5 bg-cyan-400 rounded-full border-2 sm:border-4 border-white shadow-lg"></span>
+                <div className="ml-6 sm:ml-8 bg-gray-900 bg-opacity-80 rounded-xl p-4 sm:p-6 shadow-lg">
+                  <h3 className="text-lg sm:text-2xl font-bold text-cyan-300 mb-1">
                     {exp.titulo}
                   </h3>
-                  <span className="block text-cyan-100 font-semibold mb-2">
+                  <span className="block text-cyan-100 font-semibold mb-1 sm:mb-2 text-sm sm:text-base tagesschrift-regular">
                     {exp.empresa}
                   </span>
-                  <span className="block text-gray-400 text-sm mb-3">
+                  <span className="block text-gray-400 text-xs sm:text-sm mb-2 sm:mb-3 tagesschrift-regular">
                     {exp.periodo}
                   </span>
-                  <p className="text-gray-200">{exp.descricao}</p>
+                  <p className="text-gray-200 text-xs sm:text-base tagesschrift-regular">
+                    {exp.descricao}
+                  </p>
                 </div>
               </div>
             ))}
@@ -481,7 +500,7 @@ export function Exemplo() {
         <h3
           id="projetos"
           ref={projetosTituloRef}
-          className={`text-3xl sm:text-5xl lg:text-5xl leading-tight text-center neon-blink-long`}
+          className={`text-2xl sm:text-3xl lg:text-5xl leading-tight text-center neon-blink-long`}
           style={{
             boxShadow: `
               0 0 16px #0ff,
@@ -499,7 +518,7 @@ export function Exemplo() {
 
         <section
           ref={projetosSectionRef}
-          className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 p-1 ${
+          className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 sm:gap-8 lg:gap-10 p-0 sm:p-1 ${
             projetosSectionVisible ? 'move-top-appear' : 'move-top-disappear'
           }`}
         >
@@ -517,7 +536,7 @@ export function Exemplo() {
             <>
               {projetosPaginados.map((proj, idx) => (
                 <div
-                  className="rounded-2xl border-2 bg-gray-900 b hover:box-shadow-primary-fit-pink transition-all box-shadow-primary-fit"
+                  className="rounded-2xl border-2 bg-gray-900 hover:box-shadow-primary-fit-pink transition-all box-shadow-primary-fit"
                   key={proj.name}
                   style={{
                     boxShadow: `
@@ -533,15 +552,15 @@ export function Exemplo() {
                   onMouseEnter={neonCard.onMouseEnter}
                   onMouseLeave={neonCard.onMouseLeave}
                 >
-                  <div className="flex flex-col p-6">
+                  <div className="flex flex-col p-3 sm:p-6">
                     <h3
-                      className="text-2xl font-semibold mb-2 text-[#0ff]"
+                      className="text-lg sm:text-2xl font-semibold mb-1 sm:mb-2 text-[#0ff]"
                       style={{}}
                     >
                       {proj.name}
                     </h3>
                     <p
-                      className="text-[#0ff] text-sm leading-tight mt-8"
+                      className="text-[#0ff] text-xs sm:text-sm leading-tight mt-4 sm:mt-8"
                       style={{
                         transition:
                           'text-shadow 0.8s, color 0.8s, transform 0.8s',
@@ -549,13 +568,13 @@ export function Exemplo() {
                     >
                       {proj.description}
                     </p>
-                    <div className="mt-4">
+                    <div className="mt-2 sm:mt-4">
                       {proj.topics &&
                         proj.topics.map(topic => {
                           return (
                             <span
                               key={topic}
-                              className="inline-block rounded-full bg-[#ad46ff] px-3 py-1 text-sm font-semibold mr-2 mb-2 transition-all"
+                              className="inline-block rounded-full bg-[#ad46ff] px-2 sm:px-3 py-0.5 sm:py-1 text-xs sm:text-sm font-semibold mr-1 sm:mr-2 mb-1 sm:mb-2 transition-all"
                               style={{
                                 boxShadow: `
                                   0 0 8px #ad46ff,
@@ -576,7 +595,7 @@ export function Exemplo() {
                     <a
                       href={proj.homepage}
                       target="_blank"
-                      className="mt-4 inline-block text-primary-pink font-bold text-shadow-primary-pink hover:underline self-end-safe transition-all"
+                      className="mt-2 sm:mt-4 inline-block text-primary-pink font-bold text-shadow-primary-pink hover:underline self-end-safe transition-all text-xs sm:text-base"
                       style={{
                         transition:
                           'text-shadow 0.4s, color 0.4s, transform 0.4s',
@@ -598,10 +617,20 @@ export function Exemplo() {
           )}
         </section>
 
-        <footer className="text-shadow-primary text-[#0ff] text-center">
+        <footer className="text-shadow-primary text-[#0ff] text-center text-xs sm:text-base mt-8">
           Todos os direitos reservados a Flávio Leonardo M. P.
         </footer>
       </div>
+      <style>{`
+        @media (max-width: 640px) {
+          .font-BitcountGridDouble-ExtraLight {
+            font-size: 1.5rem !important;
+          }
+          .text-gradient {
+            font-size: 1.2rem !important;
+          }
+        }
+      `}</style>
     </>
   );
 }
