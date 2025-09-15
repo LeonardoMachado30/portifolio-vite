@@ -6,7 +6,6 @@ import { defineConfig } from 'vite';
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  base: process.env.NODE_ENV === 'production' ? '/portifolio-vite/' : '/',
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
@@ -21,8 +20,4 @@ export default defineConfig({
       '@/types': path.resolve(__dirname, './src/types'),
     },
   }, // Para desenvolvimento local
-  server: {
-    port: 3000,
-    open: true,
-  },
 });
