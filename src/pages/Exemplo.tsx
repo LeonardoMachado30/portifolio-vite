@@ -1,8 +1,10 @@
+import { BotaoTopoNeon } from '@/components/atoms/BtnTopNeon';
+import Card from '@/components/molecules/Card';
+import { useNeonBoxShadow } from '@/hooks/useNeonBoxShadow';
+import { useScrollAppear } from '@/hooks/useScrollAppear';
+import { experiencia } from '@/modal/experiencias';
+import { sortearLetrasCaotica } from '@/utils/sortearLetrasPorPalavra';
 import { useEffect, useState } from 'react';
-import Card from '../components/molecules/Card';
-import { useNeonBoxShadow } from '../hooks/useNeonBoxShadow';
-import { useScrollAppear } from '../hooks/useScrollAppear';
-import { sortearLetrasCaotica } from '../utils/sortearLetrasPorPalavra';
 
 type Projeto = {
   name: string;
@@ -14,53 +16,6 @@ type Projeto = {
 };
 
 // Componente de botão "Ir para o topo" com efeito neon
-function BotaoTopoNeon() {
-  const [visivel, setVisivel] = useState(false);
-
-  useEffect(() => {
-    function aoRolar() {
-      if (window.scrollY > 100) {
-        setVisivel(true);
-      } else {
-        setVisivel(false);
-      }
-    }
-    window.addEventListener('scroll', aoRolar);
-    return () => window.removeEventListener('scroll', aoRolar);
-  }, []);
-
-  function irParaTopo() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  if (!visivel) return null;
-
-  return (
-    <button
-      onClick={irParaTopo}
-      style={{
-        position: 'fixed',
-        right: '1rem',
-        bottom: '1rem',
-        zIndex: 1000,
-        padding: '0.5rem',
-        fontSize: '0.8rem',
-        color: '#fff',
-        background: '#111',
-        border: 'none',
-        borderRadius: '2rem',
-        boxShadow: '0 0 10px #0ff, 0 0 20px #0ff, 0 0 30px #0ff, 0 0 40px #0ff',
-        textShadow: '0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff, 0 0 40px #0ff',
-        cursor: 'pointer',
-        transition: 'box-shadow 0.3s, text-shadow 0.3s',
-        outline: 'none',
-      }}
-      aria-label="Ir para o topo"
-    >
-      <span className="material-icons-outlined text-[10px]">arrow_upward</span>
-    </button>
-  );
-}
 
 export function Exemplo() {
   const [projetos, setProjetos] = useState<Projeto[]>([]);
@@ -133,44 +88,43 @@ export function Exemplo() {
       0 0 20px #ad46ff,
       0 0 0px #ad46ff
     `,
-    colorEnter: 'black',
-    boxShadowLeave: `
-      0 0 8px #0ff,
-      0 0 16px #0ff,
-      0 0 32px #0ff,
-      0 0 20px #0ff,
-      0 0 0px #0ff
+    colorEnter: 'ad46ff',
+  });
+
+  const fullNeon = useNeonBoxShadow({
+    textShadowEnter: `
+      0 0 2px #ad46ff,
+      0 0 4px #ad46ff
     `,
-    colorLeave: 'black',
+    boxShadowEnter: `
+      0 0 4px #ad46ff,
+      0 0 10px #ad46ff
+    `,
+    colorEnter: '#ad46ff',
+    scaleLeave: 'scale(1)',
   });
 
   const neonWelcome = useNeonBoxShadow({
     textShadowEnter: `
-   0 0 8px #ad46ff,
+      0 0 8px #ad46ff,
       0 0 16px #ad46ff,
       0 0 32px #ad46ff,
       0 0 20px #ad46ff,
       0 0 0px #ad46ff
     `,
     colorEnter: '#ad46ff',
-    textShadowLeave: `
-      0 0 8px #0ff,
-      0 0 16px #0ff,
-      0 0 32px #0ff,
-      0 0 30px #0ff,
-      0 0 0px #0ff
-    `,
-    colorLeave: '#0ff',
     scaleLeave: 'scale(1)',
   });
 
-  // Funções para aplicar efeito neon no h1 inteiro ao passar o mouse
-  const handleH1MouseEnter = (e: React.MouseEvent<HTMLHeadingElement>) => {
-    neonWelcome.onMouseEnter(e);
-  };
-  const handleH1MouseLeave = (e: React.MouseEvent<HTMLHeadingElement>) => {
-    neonWelcome.onMouseLeave(e);
-  };
+  const neonImage = useNeonBoxShadow({
+    filterEnter: `
+      drop-shadow(0 0 4px #ad46ff)
+      drop-shadow(0 0 8px #ad46ff)
+      drop-shadow(0 0 12px #ad46ff)
+      brightness(1.08)
+    `,
+    colorEnter: '#ad46ff',
+  });
 
   return (
     <>
@@ -187,7 +141,7 @@ export function Exemplo() {
         <div className="flex items-center justify-between mx-auto max-w-full sm:max-w-[1240px] w-full">
           <div className="flex items-center gap-2 sm:gap-3">
             <span className="text-base sm:text-xl font-bold text-cyan-200 drop-shadow whitespace-nowrap">
-              Flávio Leonardo{' '}
+              Flávio Leonardo
               <span className="hidden md:block">Machado de Pádua</span>
               <span className="block md:hidden">M. de P.</span>
             </span>
@@ -222,14 +176,14 @@ export function Exemplo() {
 
       <BotaoTopoNeon />
 
-      <div className="p-2 sm:p-4 md:p-8 space-y-16 sm:space-y-24">
+      <div className="">
         <section
           id="hero"
           className={`flex flex-col md:flex-row items-center justify-center text-center md:text-left min-h-screen relative`}
         >
-          <div className="w-full md:w-1/2 flex justify-center md:justify-end pr-0 md:pr-12 mb-20 md:mb-0">
+          <div className="w-full flex justify-center p-8">
             <div
-              className="w-32 h-32 sm:w-40 sm:h-40 md:w-64 md:h-64 flex items-center justify-center"
+              className="w-32 h-full sm:w-40 sm:h-40 md:w-64 md:h-64 flex items-center justify-center"
               style={{
                 background: 'transparent',
                 position: 'relative',
@@ -242,29 +196,29 @@ export function Exemplo() {
                   transform: 'scaleX(-1)',
                   maxWidth: '100%',
                   height: 'auto',
-                  filter:
-                    'drop-shadow(0 0 5px #0ff) drop-shadow(0 0 8px #0ff) drop-shadow(0 0 20px #0ff) drop-shadow(0 0 25px #0ff)',
                 }}
                 width={320}
                 height={320}
                 src="/profile-sem-fundo.png"
                 alt="Foto de perfil do desenvolvedor sem fundo"
+                onMouseEnter={neonImage.onMouseEnter}
+                onMouseLeave={neonImage.onMouseLeave}
               />
             </div>
           </div>
-          <div className="w-full md:w-1/2 px-2 sm:px-0">
+          <div className="w-full ">
             <h1
-              className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-shadow-2xs leading-tight font-BitcountGridDouble-ExtraLight"
+              className="text-4xl md:text-7xl font-extrabold text-shadow-2xs leading-tight font-BitcountGridDouble-ExtraLight"
               style={{
                 transition: 'text-shadow 0.2s, color 0.2s',
-                letterSpacing: '1px',
+                letterSpacing: '2px',
                 userSelect: 'none',
                 wordBreak: 'break-word',
               }}
             >
               {fraseH1.split('').map((letra, idx) => {
                 if (letra === ' ') {
-                  return <span key={idx}>&nbsp;</span>;
+                  return <span key={idx}> </span>;
                 }
                 const isNeon = letrasNeon.includes(idx);
                 return (
@@ -275,32 +229,64 @@ export function Exemplo() {
                       minWidth: '1em',
                       fontFamily: 'inherit',
                     }}
-                    onMouseEnter={handleH1MouseEnter}
-                    onMouseLeave={handleH1MouseLeave}
+                    onMouseEnter={neonWelcome.onMouseEnter}
+                    onMouseLeave={neonWelcome.onMouseLeave}
                   >
                     {letra}
                   </span>
                 );
               })}
-              <span className="text-gradient">
-                {/* Flávio já incluso acima */}
-              </span>
             </h1>
             <p className="mt-3 sm:mt-4 text-base sm:text-lg text-gray-200 max-w-full sm:max-w-lg mx-auto md:mx-0">
               Desenvolvedor de Sistemas apaixonada por criar soluções inovadoras
               e eficientes que impactam positivamente a vida das pessoas.
             </p>
-            <a
-              href="#projetos"
-              className="mt-8 sm:mt-12 inline-block !text-[#0ff] font-bold py-2 sm:py-3 px-6 sm:px-8 rounded-full shadow-xl bg-black text-shadow-primary box-shadow-primary neon-pulse text-sm sm:text-base"
-              style={{
-                transition: 'text-shadow 0.4s, color 0.4s, transform 0.4s',
-              }}
-              onMouseEnter={neonCard.onMouseEnter}
-              onMouseLeave={neonCard.onMouseLeave}
-            >
-              Ver Projetos
-            </a>
+            <div className="flex gap-4 mt-10">
+              <a
+                href="#projetos"
+                className="inline-block text-[#0ff] font-bold py-2 sm:py-3 px-6 sm:px-8 rounded-full shadow-xl bg-black text-shadow-primary box-shadow-primary neon-pulse text-sm sm:text-base"
+                style={{
+                  letterSpacing: '2px',
+                }}
+                onMouseEnter={fullNeon.onMouseEnter}
+                onMouseLeave={fullNeon.onMouseLeave}
+              >
+                Ver Projetos
+              </a>
+
+              <a
+                href="#projetos"
+                className="inline-block !text-[#0ff] font-bold py-2 sm:py-3 px-3 sm:px-8 rounded-full shadow-xl bg-black text-shadow-primary box-shadow-primary neon-pulse text-sm sm:text-base"
+                style={{
+                  transition: 'text-shadow 0.4s, color 0.4s, transform 0.4s',
+                  letterSpacing: '2px',
+                }}
+                onMouseEnter={fullNeon.onMouseEnter}
+                onMouseLeave={fullNeon.onMouseLeave}
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  style={{
+                    filter:
+                      'drop-shadow(0 0 1px #0ff) drop-shadow(0 0 6px #0ff)',
+                    transition: 'filter 0.3s',
+                  }}
+                >
+                  <path
+                    d="M3.60001 16H0.199997V5.3H3.60001V16ZM1.9 3.8C0.800002 3.8 0 3 0 1.9C0 0.8 0.900002 0 1.9 0C3 0 3.8 0.8 3.8 1.9C3.8 3 3 3.8 1.9 3.8ZM16 16H12.6V10.2C12.6 8.5 11.9 8 10.9 8C9.89999 8 8.89999 8.8 8.89999 10.3V16H5.5V5.3H8.7V6.8C9 6.1 10.2 5 11.9 5C13.8 5 15.8 6.1 15.8 9.4V16H16Z"
+                    fill="#0ff"
+                    style={{
+                      filter: 'drop-shadow(0 0 1px #0ff)',
+                      transition: 'filter 0.3s',
+                    }}
+                  />
+                </svg>
+              </a>
+            </div>
           </div>
         </section>
 
@@ -372,50 +358,18 @@ export function Exemplo() {
           className="relative max-w-full sm:max-w-3xl mx-auto py-10 sm:py-16 px-1 sm:px-0"
         >
           <h2
-            className="text-3xl sm:text-5xl font-bold text-center mb-8 sm:mb-12 text-gradient text-primary font-BitcountGridDouble-ExtraLight"
+            className="text-3xl sm:text-5xl font-bold text-center mb-8 sm:mb-12  text-primary font-BitcountGridDouble-ExtraLight neon-blink-long"
             style={{
               letterSpacing: '2px',
               lineHeight: '1.2',
+              userSelect: 'none',
             }}
           >
-            Experiências
+            EXPÊRIENCIAS
           </h2>
 
           <div className="relative border-l-2 sm:border-l-4 border-cyan-400 ml-3 sm:ml-6">
-            {[
-              {
-                titulo: 'Desenvolvedor Full-Stack',
-                empresa: 'AURA R&S LABS',
-                periodo: (function () {
-                  const inicio = new Date(2025, 4, 1);
-                  const agora = new Date();
-                  let meses =
-                    (agora.getFullYear() - inicio.getFullYear()) * 12 +
-                    (agora.getMonth() - inicio.getMonth());
-                  if (agora.getDate() < inicio.getDate()) {
-                    meses--;
-                  }
-                  meses = Math.max(0, meses + 1);
-                  return `Mai/2025 – Atual - ${meses} ${meses === 1 ? 'mês' : 'meses'}`;
-                })(),
-                descricao:
-                  'Desenvolvimento de CRM + ATS utilizando React.js, Next.js, Tailwindcss, Prisma, TypeScript, Postgres; Implementação de arquitetura modular, validações, autenticação segura JWT e integrações com datastone com APIs REST; Aplicação de testes automatizados e unitários e otimização de performance para garantir escalabilidade com Jest e Storybook;',
-              },
-              {
-                titulo: 'Desenvolvedor Full-Stack',
-                empresa: 'Grupo LAPM | Brasília/DF',
-                periodo: 'Fev/2024 – Mar/2025 - 1 ano e 1 mês',
-                descricao:
-                  'Desenvolvimento de gerenciador de contratos imobiliários utilizando Vue 2 e 3 (composition API), TypeScript, Laravel e MySQL; Liderança técnica da migração Vue 2 para o Vue 3 composition API, obtendo aumento de 60% na performance e maior manutenibilidade; Migração da biometria facial de Python no back-end para TensorFlow no front-end Vue, reduzindo custos de servidor em 4%;',
-              },
-              {
-                titulo: 'Desenvolvedor Front-End',
-                empresa: 'Trabalha Brasil | Remoto',
-                periodo: 'Jun/2021 – Jan/2023 - 1 ano e 10 meses',
-                descricao:
-                  'Desenvolvimento de job board / portal de empregos utilizando HTML, CSS, JavaScript 6+, Jquery, .NET Framework/Core, (i18n) e consumo de APIs REST; Participação em hackathon interno, garantindo promoção após 3 meses de estágio; Migração do Jquery 2.2 para 3.7 resultando em 20% mais performance e resolvido vulnerabilidades;',
-              },
-            ].map((exp, idx) => (
+            {experiencia.map((exp, idx) => (
               <div
                 key={idx}
                 className="mb-8 sm:mb-12 last:mb-0 relative"
@@ -443,34 +397,19 @@ export function Exemplo() {
               </div>
             ))}
           </div>
-
-          <style>
-            {`
-              @keyframes fadeInTimeline {
-                from { opacity: 0; transform: translateY(40px);}
-                to { opacity: 1; transform: translateY(0);}
-              }
-            `}
-          </style>
         </section>
 
-        <h3
-          id="projetos"
-          className={`text-2xl sm:text-3xl lg:text-5xl leading-tight text-center neon-blink-long`}
+        <h2
+          className="text-3xl sm:text-5xl font-bold text-center mb-8 sm:mb-12  text-primary font-BitcountGridDouble-ExtraLight neon-blink-long mt-30"
           style={{
-            boxShadow: `
-              0 0 16px #0ff,
-              0 0 32px #0ff,
-              0 0 64px #0ff,
-              0 0 128px #0ff, 
-            `,
-            transition: 'text-shadow 0.4s, color 0.4s, transform 0.4s',
+            letterSpacing: '2px',
+            lineHeight: '1.2',
+            userSelect: 'none',
           }}
-          onMouseEnter={neonWelcome.onMouseEnter}
-          onMouseLeave={neonWelcome.onMouseLeave}
+          id="projetos"
         >
           PROJETOS
-        </h3>
+        </h2>
 
         <section
           ref={projetosSectionRef}
@@ -511,7 +450,9 @@ export function Exemplo() {
                   <div className="flex flex-col p-3 sm:p-6">
                     <h3
                       className="text-lg sm:text-2xl font-semibold mb-1 sm:mb-2 text-[#0ff]"
-                      style={{}}
+                      style={{
+                        userSelect: 'none',
+                      }}
                     >
                       {proj.name}
                     </h3>
@@ -520,6 +461,7 @@ export function Exemplo() {
                       style={{
                         transition:
                           'text-shadow 0.8s, color 0.8s, transform 0.8s',
+                        userSelect: 'none',
                       }}
                     >
                       {proj.description}
@@ -530,8 +472,9 @@ export function Exemplo() {
                           return (
                             <span
                               key={topic}
-                              className="inline-block rounded-full bg-[#ad46ff] px-2 sm:px-3 py-0.5 sm:py-1 text-xs sm:text-sm font-semibold mr-1 sm:mr-2 mb-1 sm:mb-2 transition-all"
+                              className="inline-block rounded-full bg-[#ad46ff] px-2 sm:px-3 py-0.5 sm:py-1 text-xs sm:text-sm font-semibold mr-1 sm:mr-2 mb-1 sm:mb-2 transition-all tagesschrift-regular"
                               style={{
+                                userSelect: 'none',
                                 boxShadow: `
                                   0 0 8px #ad46ff,
                                   0 0 16px #ad46ff,
@@ -573,20 +516,10 @@ export function Exemplo() {
           )}
         </section>
 
-        <footer className="text-shadow-primary text-[#0ff] text-center text-xs sm:text-base mt-8">
+        <footer className="text-shadow-primary text-[#0ff] text-center text-xs sm:text-base mt-20">
           Todos os direitos reservados a Flávio Leonardo M. P.
         </footer>
       </div>
-      <style>{`
-        @media (max-width: 640px) {
-          .font-BitcountGridDouble-ExtraLight {
-            font-size: 1.5rem !important;
-          }
-          .text-gradient {
-            font-size: 1.2rem !important;
-          }
-        }
-      `}</style>
     </>
   );
 }

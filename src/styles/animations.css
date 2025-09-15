@@ -220,64 +220,63 @@
 @keyframes neon-pulse {
   0% {
     text-shadow:
-      0 0 8px #0ff,
-      0 0 16px #0ff,
-      0 0 32px #0ff,
-      0 0 64px #0ff;
+      0 0 1px #0ff,
+      0 0 2px #0ff; /* Sombras menores e mais suaves, próximas ao shape */
     box-shadow:
-      0 0 8px #0ff,
-      0 0 16px #0ff,
-      0 0 32px #0ff,
-      0 0 64px #0ff;
+      0 0 2px #0ff,
+      0 0 6px #0ff; /* Box-shadow menor e mais suave, próximo ao shape */
     filter: brightness(1);
   }
   50% {
     text-shadow:
-      0 0 16px #0ff,
-      0 0 32px #0ff,
-      0 0 64px #0ff,
-      0 0 128px #0ff;
+      0 0 2px #0ff,
+      0 0 4px #0ff; /* Um pouco mais intenso, mas ainda suave */
     box-shadow:
-      0 0 16px #0ff,
-      0 0 32px #0ff,
-      0 0 64px #0ff,
-      0 0 128px #0ff;
-    filter: brightness(1.15);
+      0 0 4px #0ff,
+      0 0 10px #0ff; /* Box-shadow levemente maior, mas ainda próximo */
+    filter: brightness(1.12);
   }
   100% {
     text-shadow:
-      0 0 8px #0ff,
-      0 0 16px #0ff,
-      0 0 32px #0ff,
-      0 0 64px #0ff;
+      0 0 1px #0ff,
+      0 0 2px #0ff;
     box-shadow:
-      0 0 8px #0ff,
-      0 0 16px #0ff,
-      0 0 32px #0ff,
-      0 0 64px #0ff;
+      0 0 2px #0ff,
+      0 0 6px #0ff;
     filter: brightness(1);
   }
 }
 
 .neon-pulse {
-  animation: neon-pulse 3s infinite alternate;
+  animation: neon-pulse 3s infinite alternate !important;
 }
 
 @keyframes drop-shadow-pulse {
   0% {
-    filter: drop-shadow(0 0 5px #0ff) drop-shadow(0 0 8px #0ff)
-      drop-shadow(0 0 20px #0ff) drop-shadow(0 0 25px #0ff);
+    filter: drop-shadow(0 0 2px #0ff) drop-shadow(0 0 4px #0ff)
+      drop-shadow(0 0 6px #0ff);
   }
   50% {
-    filter: drop-shadow(0 0 10px #0ff) drop-shadow(0 0 16px #0ff)
-      drop-shadow(0 0 40px #0ff) drop-shadow(0 0 50px #0ff) brightness(1.2);
+    filter: drop-shadow(0 0 4px #0ff) drop-shadow(0 0 8px #0ff)
+      drop-shadow(0 0 12px #0ff) brightness(1.08);
   }
   100% {
-    filter: drop-shadow(0 0 5px #0ff) drop-shadow(0 0 8px #0ff)
-      drop-shadow(0 0 20px #0ff) drop-shadow(0 0 25px #0ff);
+    filter: drop-shadow(0 0 2px #0ff) drop-shadow(0 0 4px #0ff)
+      drop-shadow(0 0 6px #0ff);
   }
 }
 
 .drop-shadow-pulse {
   animation: drop-shadow-pulse 8s infinite alternate;
+}
+
+@keyframes fadeInTimeline {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
