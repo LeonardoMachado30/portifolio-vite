@@ -7,7 +7,7 @@
 
 @font-face {
   font-family: 'BitcountGridDouble';
-  src: url('./src/assets/font/BitcountGridDouble-Medium.ttf') format('truetype');
+  src: url('./assets/font/BitcountGridDouble-Medium.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -23,8 +23,7 @@
 
 @font-face {
   font-family: 'BitcountGridDouble-ExtraLight';
-  src: url('./src/assets/font/BitcountGridDouble-ExtraLight.ttf')
-    format('truetype');
+  src: url('./assets/font/BitcountGridDouble-ExtraLight.ttf') format('truetype');
   font-weight: 100;
   font-style: normal;
   font-display: swap;
