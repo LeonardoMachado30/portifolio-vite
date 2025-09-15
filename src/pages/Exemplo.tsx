@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Card from '../components/molecules/Card';
 import { useNeonBoxShadow } from '../hooks/useNeonBoxShadow';
 import { useScrollAppear } from '../hooks/useScrollAppear';
@@ -12,8 +12,6 @@ type Projeto = {
   homepage: string;
   description: string;
 };
-
-const ITENS_POR_PAGINA = 9;
 
 // Componente de botão "Ir para o topo" com efeito neon
 function BotaoTopoNeon() {
@@ -64,32 +62,15 @@ function BotaoTopoNeon() {
   );
 }
 
-// Função utilitária para verificar se um elemento está visível na viewport
-function isInViewport(element: HTMLElement | null, offset = 0) {
-  if (!element) return false;
-  const rect = element.getBoundingClientRect();
-  return rect.top + offset < window.innerHeight && rect.bottom - offset > 0;
-}
-
 export function Exemplo() {
   const [projetos, setProjetos] = useState<Projeto[]>([]);
   const [carregando, setCarregando] = useState(false);
   const [erro, setErro] = useState<string | null>(null);
-  const [paginaAtual, setPaginaAtual] = useState(1);
 
   const [sobreRef, sobreVisible] = useScrollAppear<HTMLElement>();
-  const [projetosTituloRef, projetosTituloVisible] =
-    useScrollAppear<HTMLHeadingElement>();
+  useScrollAppear<HTMLHeadingElement>();
   const [projetosSectionRef, projetosSectionVisible] =
     useScrollAppear<HTMLElement>();
-
-  // Refs para as seções do menu
-  const heroRef = useRef<HTMLElement | null>(null);
-  const sobreMenuRef = sobreRef;
-  const projetosMenuRef = projetosTituloRef;
-
-  // Estado para controlar qual seção está ativa
-  const [activeSection, setActiveSection] = useState<string>('hero');
 
   // Neon blink state para letras do H1
   const fraseH1 = 'Olá, eu sou o Flávio';
@@ -163,25 +144,6 @@ export function Exemplo() {
     colorLeave: 'black',
   });
 
-  const neonTopics = useNeonBoxShadow({
-    boxShadowEnter: `
-      0 0 16px #ad46ff,
-      0 0 32px ##ad46ff,
-      0 0 64px ##ad46ff,
-      0 0 128px ##ad46ff,
-    `,
-    colorEnter: 'white',
-    boxShadowLeave: `
-    0 0 8px #ad46ff,
-    0 0 12px #ad46ff,
-    0 0 64px #ad46ff,
-    0 0 128px #ad46ff
-    `,
-    colorLeave: 'white',
-    scaleEnter: 'translateY(-4px)',
-    scaleLeave: 'scale(1)',
-  });
-
   const neonWelcome = useNeonBoxShadow({
     textShadowEnter: `
    0 0 8px #ad46ff,
@@ -201,11 +163,6 @@ export function Exemplo() {
     colorLeave: '#0ff',
     scaleLeave: 'scale(1)',
   });
-
-  const projetosPaginados = projetos.slice(
-    (paginaAtual - 1) * ITENS_POR_PAGINA,
-    paginaAtual * ITENS_POR_PAGINA
-  );
 
   // Funções para aplicar efeito neon no h1 inteiro ao passar o mouse
   const handleH1MouseEnter = (e: React.MouseEvent<HTMLHeadingElement>) => {
@@ -499,7 +456,6 @@ export function Exemplo() {
 
         <h3
           id="projetos"
-          ref={projetosTituloRef}
           className={`text-2xl sm:text-3xl lg:text-5xl leading-tight text-center neon-blink-long`}
           style={{
             boxShadow: `
@@ -534,7 +490,7 @@ export function Exemplo() {
             </div>
           ) : (
             <>
-              {projetosPaginados.map((proj, idx) => (
+              {projetos.map(proj => (
                 <div
                   className="rounded-2xl border-2 bg-gray-900 hover:box-shadow-primary-fit-pink transition-all box-shadow-primary-fit"
                   key={proj.name}
@@ -608,7 +564,7 @@ export function Exemplo() {
                   </div>
                 </div>
               ))}
-              {projetosPaginados.length === 0 && (
+              {projetos.length === 0 && (
                 <Card>
                   <p>Nenhum projeto encontrado nesta página.</p>
                 </Card>
