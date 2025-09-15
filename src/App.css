@@ -36,11 +36,15 @@
 /* Adicione scroll-behavior também no html para garantir */
 html,
 body,
-mian,
+main,
 #root {
-  height: 100vh;
   font-family: 'BitcountGridDouble', system-ui;
-  scroll-behavior: smooth;
+  height: 100%;
+  overflow: hidden; /* bloqueia scroll nativo */
+}
+
+[data-scroll-container] {
+  min-height: 100vh;
 }
 
 .text-shadow-primary {
