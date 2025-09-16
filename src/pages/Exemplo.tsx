@@ -173,7 +173,7 @@ export function Exemplo() {
     // Detecta a largura da tela para ajustar lerp e multiplier no mobile
     const scroll = new LocomotiveScroll({
       el: containerRef.current!,
-      smooth: true,
+      smooth: isMobile ? false : true,
       lerp: isMobile ? 0.16 : 0.07, // aumenta a velocidade no mobile
       multiplier: isMobile ? 1.8 : 1, // aumenta a velocidade no mobile
       smartphone: {
