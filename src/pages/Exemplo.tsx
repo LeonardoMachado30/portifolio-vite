@@ -176,8 +176,13 @@ export function Exemplo() {
       smooth: isMobile ? false : true,
       lerp: isMobile ? 1 : 0.07, // aumenta a velocidade no mobile
       multiplier: isMobile ? 1 : 1, // aumenta a velocidade no mobile
+      tablet: {
+        smooth: true,
+        direction: 'vertical',
+        breakpoint: 720,
+      },
       smartphone: {
-        smooth: isMobile ? false : true,
+        smooth: true,
         direction: 'vertical',
       },
     });
