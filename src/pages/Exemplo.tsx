@@ -233,7 +233,7 @@ export function Exemplo() {
               data-scroll
               data-scroll-speed="-6"
               data-scroll-delay="0.1"
-              className="w-full"
+              className="w-full flex flex-col gap-6"
             >
               <h1
                 className="text-4xl md:text-7xl font-extrabold text-shadow-2xs leading-tight font-BitcountGridDouble-ExtraLight"
