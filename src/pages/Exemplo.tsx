@@ -392,7 +392,7 @@ export function Exemplo() {
                     <span className="block text-gray-400 text-xs sm:text-sm tagesschrift-regular">
                       {exp.periodo}
                     </span>
-                    <p className="text-gray-200 text-xs sm:text-base tagesschrift-regular">
+                    <p className="text-gray-200 sm:text-md tagesschrift-regular">
                       <ul>
                         {exp.descricoes.map(description => (
                           <li className="list-disc list-inside ml-4">
