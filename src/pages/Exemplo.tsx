@@ -522,7 +522,7 @@ export function Exemplo() {
                           {proj.name}
                         </h3>
                         <p
-                          className="text-[#0ff] text-xs sm:text-sm leading-tight"
+                          className="text-[#0ff] text-base sm:text-md leading-tight"
                           style={{
                             transition:
                               'text-shadow 0.8s, color 0.8s, transform 0.8s',
