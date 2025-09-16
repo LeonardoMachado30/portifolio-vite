@@ -29,7 +29,7 @@ export const IconGithub: React.FC<IconGithubProps> = props => (
   </svg>
 );
 
-export const IconLinkedin: React.FC<IconGithubProps> = props => (
+export const IconLinkedin: React.FC<IconGithubProps> = () => (
   <svg
     width="16"
     height="16"
