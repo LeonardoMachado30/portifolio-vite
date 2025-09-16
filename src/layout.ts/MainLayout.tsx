@@ -5,8 +5,8 @@ export function MainLayout({ children }: { children: ReactNode }) {
     <main
       className="bg-gray-800"
       style={{
-        backgroundImage: `linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px)`,
+        backgroundImage: `linear-gradient(rgba(0, 255, 255, 0.01) 2px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 255, 0.01) 1px, transparent 2px)`,
         backgroundSize: '50px 50px',
         animation: 'scanlines 5s linear infinite',
       }}
@@ -14,8 +14,8 @@ export function MainLayout({ children }: { children: ReactNode }) {
       <div
         className="gap-4 bg-gray-800 "
         style={{
-          backgroundImage: `linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(rgba(0, 255, 255, 0.01) 2px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 255, 0.01) 2px, transparent 1px)`,
           backgroundSize: '50px 50px',
           animation: 'scanlines 5s linear infinite',
         }}

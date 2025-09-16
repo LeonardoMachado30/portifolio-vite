@@ -80,11 +80,17 @@ export function Exemplo() {
 
     fetchAndInit();
 
+    // Detecta a largura da tela para ajustar lerp e multiplier no mobile
+    const isMobile = window.innerWidth <= 768;
     const scroll = new LocomotiveScroll({
       el: containerRef.current!,
       smooth: true,
-      lerp: 0.07,
-      multiplier: 1,
+      lerp: isMobile ? 0.32 : 0.07, // aumenta a velocidade no mobile
+      multiplier: isMobile ? 2 : 1, // aumenta a velocidade no mobile
+      smartphone: {
+        smooth: true,
+        direction: 'vertical',
+      },
     });
 
     scrollRef.current = scroll;
@@ -210,33 +216,16 @@ export function Exemplo() {
           <section
             data-scroll-section
             id="hero"
-            className="flex flex-col md:flex-row items-center justify-center text-center md:text-left min-h-screen relative mb-400"
+            className="flex flex-col md:flex-row items-center justify-center text-center md:text-left min-h-screen relative mb-100"
           >
             <div
-              className="w-full h-full flex items-center justify-center"
-              style={{ background: 'transparent', position: 'relative' }}
-            >
-              <img
-                data-scroll
-                data-scroll-speed="2"
-                data-scroll-delay="0.1"
-                className="drop-shadow-pulse"
-                width={320}
-                height={320}
-                src="/profile-sem-fundo.png"
-                alt="Foto de perfil do desenvolvedor sem fundo"
-                onMouseEnter={neonImage.onMouseEnter}
-                onMouseLeave={neonImage.onMouseLeave}
-              />
-            </div>
-            <div
               data-scroll
-              data-scroll-speed="-6"
+              data-scroll-speed="2"
               data-scroll-delay="0.1"
               className="w-full flex flex-col gap-6"
             >
               <h1
-                className="text-4xl md:text-7xl font-extrabold text-shadow-2xs leading-tight font-BitcountGridDouble-ExtraLight"
+                className="text-5xl md:text-7xl font-extrabold text-shadow-2xs leading-tight font-BitcountGridDouble-ExtraLight m-10 md:mb-0"
                 style={{
                   transition: 'text-shadow 0.2s, color 0.2s',
                   letterSpacing: '2px',
@@ -277,7 +266,7 @@ export function Exemplo() {
                 <button
                   type="button"
                   onClick={() => scrollRef.current?.scrollTo('#projetos')}
-                  className="flex justify-center items-center text-[#0ff] py-2 px-6 rounded-full bg-black neon-pulse"
+                  className="flex justify-center items-center text-[#0ff] my-1 mb:py-2 px-4 md:px-6 rounded-full bg-black neon-pulse text-sm md:text-base"
                   style={{ letterSpacing: '2px' }}
                   onMouseEnter={fullNeon.onMouseEnter}
                   onMouseLeave={fullNeon.onMouseLeave}
@@ -287,7 +276,7 @@ export function Exemplo() {
                 <a
                   href="https://www.linkedin.com/in/flavio-leonardo-machado/"
                   target="_blank"
-                  className="flex items-center justify-center p-4 rounded-full bg-black neon-pulse"
+                  className="flex items-center justify-center p-4 md:p-4 rounded-full bg-black neon-pulse"
                   style={{
                     transition: 'text-shadow 0.4s, color 0.4s, transform 0.4s',
                     letterSpacing: '2px',
@@ -351,6 +340,23 @@ export function Exemplo() {
                 </a>
               </div>
             </div>
+            <div
+              className="w-full h-full flex items-center justify-center"
+              style={{ background: 'transparent', position: 'relative' }}
+            >
+              <img
+                data-scroll
+                data-scroll-speed="2"
+                data-scroll-delay="0.1"
+                className="drop-shadow-pulse"
+                width={320}
+                height={320}
+                src="/profile-sem-fundo.png"
+                alt="Foto de perfil do desenvolvedor sem fundo"
+                onMouseEnter={neonImage.onMouseEnter}
+                onMouseLeave={neonImage.onMouseLeave}
+              />
+            </div>
           </section>
 
           <section
@@ -381,7 +387,7 @@ export function Exemplo() {
                   className="relative"
                   style={{
                     opacity: 0,
-                    animation: `fadeInTimeline 1s ease forwards`,
+                    animation: `fadeInTimeline 0.8s ease forwards`,
                     animationDelay: `${idx + 1}s`,
                   }}
                 >
@@ -397,8 +403,29 @@ export function Exemplo() {
                       {exp.periodo}
                     </span>
                     <p className="text-gray-200 text-xs sm:text-base tagesschrift-regular">
-                      {exp.descricao}
+                      <ul>
+                        {exp.descricoes.map(description => (
+                          <li className="list-disc list-inside ml-4">
+                            {description}
+                          </li>
+                        ))}
+                      </ul>
                     </p>
+
+                    <div className="mt-4">
+                      {exp.topics &&
+                        exp.topics.map(topic => (
+                          <span
+                            key={topic}
+                            className="inline-block rounded-full bg-[#ad46ff] px-2 sm:px-3 py-0.5 sm:py-1 text-xs sm:text-sm font-semibold mr-2 mb-2 sm:mr-4 transition-all tagesschrift-regular"
+                            style={{
+                              userSelect: 'none',
+                            }}
+                          >
+                            {topic}
+                          </span>
+                        ))}
+                    </div>
                   </div>
                 </div>
               ))}
@@ -461,9 +488,9 @@ export function Exemplo() {
             </div>
           </section>
 
-          <section id="projetos" data-scroll-section className="">
+          <section id="projetos" data-scroll-section>
             <h2
-              className="relative text-3xl sm:text-5xl font-bold text-center text-primary font-BitcountGridDouble-ExtraLight neon-blink-long"
+              className="relative text-3xl sm:text-5xl font-bold text-center text-primary font-BitcountGridDouble-ExtraLight neon-blink-long mb-10"
               style={{
                 letterSpacing: '2px',
                 lineHeight: '1.2',
@@ -475,9 +502,6 @@ export function Exemplo() {
             </h2>
 
             <div
-              data-scroll
-              data-scroll-speed="-2"
-              data-scroll-delay="0.4"
               className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 sm:gap-8 lg:gap-10 p-0 sm:p-4"
               style={{
                 zIndex: '3',
@@ -501,9 +525,7 @@ export function Exemplo() {
                   {projetos.map((proj, key) => (
                     <div
                       key={key}
-                      className="rounded-2xl border-2 bg-gray-900 box-shadow-primary-fit"
-                      onMouseEnter={neonCard.onMouseEnter}
-                      onMouseLeave={neonCard.onMouseLeave}
+                      className="rounded-xl border-[1px] bg-gray-900"
                     >
                       <div className="flex flex-col p-3 sm:p-6">
                         <h3 className="text-lg sm:text-2xl font-semibold text-[#0ff]">
@@ -554,6 +576,74 @@ export function Exemplo() {
                   )}
                 </>
               )}
+            </div>
+
+            <div className="flex gap-6 justify-center md:justify-start mt-10">
+              <a
+                href="https://www.linkedin.com/in/flavio-leonardo-machado/"
+                target="_blank"
+                className="flex items-center justify-center p-4 rounded-full bg-black neon-pulse"
+                style={{
+                  transition: 'text-shadow 0.4s, color 0.4s, transform 0.4s',
+                  letterSpacing: '2px',
+                }}
+                onMouseEnter={fullNeon.onMouseEnter}
+                onMouseLeave={fullNeon.onMouseLeave}
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  style={{
+                    filter:
+                      'drop-shadow(0 0 1px #0ff) drop-shadow(0 0 6px #0ff)',
+                    transition: 'filter 0.3s',
+                  }}
+                >
+                  <path
+                    d="M3.60001 16H0.199997V5.3H3.60001V16ZM1.9 3.8C0.800002 3.8 0 3 0 1.9C0 0.8 0.900002 0 1.9 0C3 0 3.8 0.8 3.8 1.9C3.8 3 3 3.8 1.9 3.8ZM16 16H12.6V10.2C12.6 8.5 11.9 8 10.9 8C9.89999 8 8.89999 8.8 8.89999 10.3V16H5.5V5.3H8.7V6.8C9 6.1 10.2 5 11.9 5C13.8 5 15.8 6.1 15.8 9.4V16H16Z"
+                    fill="#0ff"
+                    style={{
+                      filter: 'drop-shadow(0 0 1px #0ff)',
+                      transition: 'filter 0.3s',
+                    }}
+                  />
+                </svg>
+              </a>
+              <a
+                href="https://github.com/LeonardoMachado30"
+                target="_blank"
+                className="flex items-center justify-center p-4 rounded-full bg-black neon-pulse"
+                style={{ letterSpacing: '2px' }}
+                onMouseEnter={fullNeon.onMouseEnter}
+                onMouseLeave={fullNeon.onMouseLeave}
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  style={{
+                    filter:
+                      'drop-shadow(0 0 1px #0ff) drop-shadow(0 0 6px #0ff)',
+                    transition: 'filter 0.3s',
+                  }}
+                >
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M7.97553 0C3.57186 0 0 3.57187 0 7.97553C0 11.4985 2.29969 14.4832 5.43119 15.5596C5.82263 15.6086 5.96942 15.3639 5.96942 15.1682C5.96942 14.9725 5.96942 14.4832 5.96942 13.7982C3.76758 14.2875 3.27829 12.7217 3.27829 12.7217C2.93578 11.792 2.39755 11.5474 2.39755 11.5474C1.66361 11.0581 2.44648 11.0581 2.44648 11.0581C3.22936 11.107 3.66972 11.8899 3.66972 11.8899C4.40367 13.1131 5.52905 12.7706 5.96942 12.5749C6.01835 12.0367 6.263 11.6942 6.45872 11.4985C4.69725 11.3028 2.83792 10.6177 2.83792 7.53517C2.83792 6.65443 3.1315 5.96942 3.66972 5.38226C3.62079 5.23547 3.32722 4.40367 3.76758 3.32722C3.76758 3.32722 4.4526 3.1315 5.96942 4.15902C6.6055 3.9633 7.29052 3.91437 7.97553 3.91437C8.66055 3.91437 9.34557 4.01223 9.98165 4.15902C11.4985 3.1315 12.1835 3.32722 12.1835 3.32722C12.6239 4.40367 12.3303 5.23547 12.2813 5.43119C12.7706 5.96942 13.1131 6.70336 13.1131 7.58410C13.1131 10.6667 11.2538 11.3028 9.49235 11.4985C9.78593 11.7431 10.0306 12.2324 10.0306 12.9664C10.0306 14.0428 10.0306 14.8746 10.0306 15.1682C10.0306 15.3639 10.1774 15.6086 10.5688 15.5596C13.7492 14.4832 16 11.4985 16 7.97553C15.9511 3.57187 12.3792 0 7.97553 0Z"
+                    fill="#0ff"
+                    style={{
+                      filter: 'drop-shadow(0 0 1px #0ff)',
+                      transition: 'filter 0.3s',
+                    }}
+                  />
+                </svg>
+              </a>
             </div>
           </section>
 

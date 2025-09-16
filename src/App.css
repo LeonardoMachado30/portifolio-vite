@@ -41,7 +41,7 @@ html {
 }
 
 [data-scroll-container] > :last-child {
-  padding-bottom: 20vh; /* ou mais */
+  padding-bottom: 10vh; /* ou mais */
 }
 
 .text-shadow-primary {
