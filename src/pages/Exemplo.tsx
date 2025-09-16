@@ -116,16 +116,6 @@ export function Exemplo() {
 
   // Atualiza o scroll quando projetos mudam (dinamicamente)
 
-  const neonCard = useNeonBoxShadow({
-    boxShadowEnter: `
-      0 0 8px #ad46ff,
-      0 0 16px #ad46ff,
-      0 0 32px #ad46ff,
-      0 0 20px #ad46ff,
-      0 0 0px #ad46ff
-    `,
-    colorEnter: 'ad46ff',
-  });
   const fullNeon = useNeonBoxShadow({
     textShadowEnter: `
       0 0 2px #ad46ff,
