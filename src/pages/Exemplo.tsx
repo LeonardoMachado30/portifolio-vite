@@ -5,6 +5,7 @@ import { sortearLetrasCaotica } from '@/utils/sortearLetrasPorPalavra';
 import LocomotiveScroll from 'locomotive-scroll';
 import 'locomotive-scroll/dist/locomotive-scroll.css';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { IconGithub, IconLinkedin } from '../components/atoms/icons';
 
 type Projeto = {
   name: string;
@@ -23,7 +24,6 @@ async function fetchProjetosGithub(): Promise<Projeto[]> {
     throw new Error('Erro ao buscar projetos do GitHub');
   }
   const data = await response.json();
-
   return data
     .filter(
       (repo: any) => !!repo.description && !!repo.language && repo.homepage
@@ -43,6 +43,89 @@ async function fetchProjetosGithub(): Promise<Projeto[]> {
       homepage: repo.homepage,
       description: repo.description,
     }));
+  // console.log(dataNew);
+  // return [
+  //   {
+  //     name: 'Aura Ats',
+  //     html_url: 'https://github.com/LeonardoMachado30/aura-ats',
+  //     language: 'TypeScript',
+  //     topics: [
+  //       'express',
+  //       'firebase',
+  //       'nextjs',
+  //       'prisma-orm',
+  //       'react',
+  //       'react-hook-form',
+  //       'typescript',
+  //     ],
+  //     homepage: 'https://www.aurareslabs.com/',
+  //     description:
+  //       'CRM + ATS, site desenvolvido para cliente que busca gestão é qualidade.',
+  //   },
+  //   {
+  //     name: 'College Blockchain Interface Website',
+  //     html_url:
+  //       'https://github.com/LeonardoMachado30/College-Blockchain-Interface-Website',
+  //     language: 'HTML',
+  //     topics: ['css', 'html', 'javascript', 'model', 'website'],
+  //     homepage:
+  //       'https://leonardomachado30.github.io/College-Blockchain-Interface-Website/',
+  //     description:
+  //       'Faculdade: Projeto Interface com Usuário (PIU), fluxo de telas de um sistema Hortifrúti, para vendas de frutas, legumes',
+  //   },
+  //   {
+  //     name: 'College Hortfrut Website',
+  //     html_url: 'https://github.com/LeonardoMachado30/College-Hortfrut-Website',
+  //     language: 'HTML',
+  //     topics: ['css', 'html', 'javascript'],
+  //     homepage: 'https://leonardomachado30.github.io/College-Hortfrut-Website/',
+  //     description:
+  //       'Faculdade: Trabalho de Interface com o usuário, cuja o objetivo e apresentar uma tela com listagem de frutas e legumes para venda, ou Hortfruti.',
+  //   },
+  //   {
+  //     name: 'Dvx',
+  //     html_url: 'https://github.com/LeonardoMachado30/dvx',
+  //     language: 'JavaScript',
+  //     topics: ['css3', 'html5', 'javascript', 'treejs'],
+  //     homepage: 'https://leonardomachado30.github.io/dvx/',
+  //     description: 'Landing Page DVX Soluções Tecnológicas.',
+  //   },
+  //   {
+  //     name: 'Jogo Da Memoria',
+  //     html_url: 'https://github.com/LeonardoMachado30/jogo-da-memoria',
+  //     language: 'TypeScript',
+  //     topics: [
+  //       'firebase',
+  //       'firebase-auth',
+  //       'firebase-realtime-database',
+  //       'pinia-vuejs',
+  //       'quasar-framework',
+  //       'typescript',
+  //       'vue3',
+  //     ],
+  //     homepage: 'https://leonardomachado30.github.io/jogo-da-memoria/',
+  //     description:
+  //       'Jogo da memoria criado com firebase com até 3 níveis de dificuldades.',
+  //   },
+  //   {
+  //     name: 'Pokemons React',
+  //     html_url: 'https://github.com/LeonardoMachado30/Pokemons-React',
+  //     language: 'TypeScript',
+  //     topics: [
+  //       'context-api',
+  //       'css',
+  //       'html',
+  //       'jsx',
+  //       'nextjs',
+  //       'reactjs',
+  //       'sass',
+  //       'styled-components',
+  //       'tailwindcss',
+  //     ],
+  //     homepage: 'https://front-end-pokemons.vercel.app',
+  //     description: 'Apresentando listagem de Pokemons',
+  //   },
+  // ];
 }
 
 export function Exemplo() {
@@ -55,6 +138,13 @@ export function Exemplo() {
   const [projetos, setProjetos] = useState<Projeto[]>([]);
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState<string | null>(null);
+  const isMobile = window.innerWidth <= 768;
+
+  // Estados para paginação
+  const [paginaAtual, setPaginaAtual] = useState(1);
+  const itensPorPagina = isMobile ? 2 : 3;
+
+  const totalPaginas = Math.ceil(projetos.length / itensPorPagina);
 
   const loadProjetos = useCallback(async () => {
     setCarregando(true);
@@ -81,11 +171,10 @@ export function Exemplo() {
     fetchAndInit();
 
     // Detecta a largura da tela para ajustar lerp e multiplier no mobile
-    const isMobile = window.innerWidth <= 768;
     const scroll = new LocomotiveScroll({
       el: containerRef.current!,
       smooth: true,
-      lerp: isMobile ? 0.24 : 0.07, // aumenta a velocidade no mobile
+      lerp: isMobile ? 0.16 : 0.07, // aumenta a velocidade no mobile
       multiplier: isMobile ? 1.8 : 1, // aumenta a velocidade no mobile
       smartphone: {
         smooth: true,
@@ -109,7 +198,7 @@ export function Exemplo() {
   useEffect(() => {
     const interval = setInterval(() => {
       setLetrasNeon(sortearLetrasCaotica(fraseH1));
-    }, 6000);
+    }, 4000);
     setLetrasNeon(sortearLetrasCaotica(fraseH1));
     return () => clearInterval(interval);
   }, [fraseH1]);
@@ -148,6 +237,12 @@ export function Exemplo() {
     `,
     colorEnter: '#ad46ff',
   });
+
+  // Função para obter os projetos da página atual
+  const projetosPaginados = projetos.slice(
+    (paginaAtual - 1) * itensPorPagina,
+    paginaAtual * itensPorPagina
+  );
 
   return (
     <>
@@ -206,7 +301,7 @@ export function Exemplo() {
           <section
             data-scroll-section
             id="hero"
-            className="flex flex-col md:flex-row items-center justify-center text-center md:text-left min-h-screen relative mb-100"
+            className="flex flex-col md:flex-row items-center justify-center text-center md:text-left min-h-screen relative mb-50 md:mb-100"
           >
             <div
               data-scroll
@@ -274,27 +369,7 @@ export function Exemplo() {
                   onMouseEnter={fullNeon.onMouseEnter}
                   onMouseLeave={fullNeon.onMouseLeave}
                 >
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    style={{
-                      filter:
-                        'drop-shadow(0 0 1px #0ff) drop-shadow(0 0 6px #0ff)',
-                      transition: 'filter 0.3s',
-                    }}
-                  >
-                    <path
-                      d="M3.60001 16H0.199997V5.3H3.60001V16ZM1.9 3.8C0.800002 3.8 0 3 0 1.9C0 0.8 0.900002 0 1.9 0C3 0 3.8 0.8 3.8 1.9C3.8 3 3 3.8 1.9 3.8ZM16 16H12.6V10.2C12.6 8.5 11.9 8 10.9 8C9.89999 8 8.89999 8.8 8.89999 10.3V16H5.5V5.3H8.7V6.8C9 6.1 10.2 5 11.9 5C13.8 5 15.8 6.1 15.8 9.4V16H16Z"
-                      fill="#0ff"
-                      style={{
-                        filter: 'drop-shadow(0 0 1px #0ff)',
-                        transition: 'filter 0.3s',
-                      }}
-                    />
-                  </svg>
+                  <IconLinkedin />
                 </a>
                 <a
                   href="https://github.com/LeonardoMachado30"
@@ -304,29 +379,7 @@ export function Exemplo() {
                   onMouseEnter={fullNeon.onMouseEnter}
                   onMouseLeave={fullNeon.onMouseLeave}
                 >
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    style={{
-                      filter:
-                        'drop-shadow(0 0 1px #0ff) drop-shadow(0 0 6px #0ff)',
-                      transition: 'filter 0.3s',
-                    }}
-                  >
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M7.97553 0C3.57186 0 0 3.57187 0 7.97553C0 11.4985 2.29969 14.4832 5.43119 15.5596C5.82263 15.6086 5.96942 15.3639 5.96942 15.1682C5.96942 14.9725 5.96942 14.4832 5.96942 13.7982C3.76758 14.2875 3.27829 12.7217 3.27829 12.7217C2.93578 11.792 2.39755 11.5474 2.39755 11.5474C1.66361 11.0581 2.44648 11.0581 2.44648 11.0581C3.22936 11.107 3.66972 11.8899 3.66972 11.8899C4.40367 13.1131 5.52905 12.7706 5.96942 12.5749C6.01835 12.0367 6.263 11.6942 6.45872 11.4985C4.69725 11.3028 2.83792 10.6177 2.83792 7.53517C2.83792 6.65443 3.1315 5.96942 3.66972 5.38226C3.62079 5.23547 3.32722 4.40367 3.76758 3.32722C3.76758 3.32722 4.4526 3.1315 5.96942 4.15902C6.6055 3.9633 7.29052 3.91437 7.97553 3.91437C8.66055 3.91437 9.34557 4.01223 9.98165 4.15902C11.4985 3.1315 12.1835 3.32722 12.1835 3.32722C12.6239 4.40367 12.3303 5.23547 12.2813 5.43119C12.7706 5.96942 13.1131 6.70336 13.1131 7.58410C13.1131 10.6667 11.2538 11.3028 9.49235 11.4985C9.78593 11.7431 10.0306 12.2324 10.0306 12.9664C10.0306 14.0428 10.0306 14.8746 10.0306 15.1682C10.0306 15.3639 10.1774 15.6086 10.5688 15.5596C13.7492 14.4832 16 11.4985 16 7.97553C15.9511 3.57187 12.3792 0 7.97553 0Z"
-                      fill="#0ff"
-                      style={{
-                        filter: 'drop-shadow(0 0 1px #0ff)',
-                        transition: 'filter 0.3s',
-                      }}
-                    />
-                  </svg>
+                  <IconGithub />
                 </a>
               </div>
             </div>
@@ -352,7 +405,7 @@ export function Exemplo() {
           <section
             id="timeline"
             data-scroll-section
-            className="relative max-w-full sm:max-w-3xl mx-auto py-10 sm:py-16 px-1 sm:px-0 mb-200"
+            className="relative max-w-full sm:max-w-3xl mx-auto py-10 sm:py-16 px-1 sm:px-0 mb-50 md:mb-100"
           >
             <h2
               className="text-3xl sm:text-5xl font-bold text-center text-primary font-BitcountGridDouble-ExtraLight neon-blink-long"
@@ -392,15 +445,13 @@ export function Exemplo() {
                     <span className="block text-gray-400 text-xs sm:text-sm tagesschrift-regular">
                       {exp.periodo}
                     </span>
-                    <p className="text-gray-200 sm:text-md tagesschrift-regular">
-                      <ul>
-                        {exp.descricoes.map(description => (
-                          <li className="list-disc list-inside ml-4">
-                            {description}
-                          </li>
-                        ))}
-                      </ul>
-                    </p>
+                    <ul className="text-gray-200 text-sm sm:text-md tagesschrift-regular">
+                      {exp.descricoes.map((description, index) => (
+                        <li key={index} className="list-disc list-inside ml-4">
+                          {description}
+                        </li>
+                      ))}
+                    </ul>
 
                     <div className="mt-4">
                       {exp.topics &&
@@ -425,7 +476,7 @@ export function Exemplo() {
           <section
             data-scroll-section
             id="sobre"
-            className="w-full flex justify-center items-center mt-100 mb-200"
+            className="w-full flex justify-center items-center mt-100 mb-50 md:mb-100"
           >
             <div
               data-scroll
@@ -477,170 +528,149 @@ export function Exemplo() {
               </div>
             </div>
           </section>
-
-          <section id="projetos" data-scroll-section>
-            <h2
-              className="relative text-3xl sm:text-5xl font-bold text-center text-primary font-BitcountGridDouble-ExtraLight neon-blink-long mb-10"
-              style={{
-                letterSpacing: '2px',
-                lineHeight: '1.2',
-                userSelect: 'none',
-                zIndex: '-1',
-              }}
-            >
-              PROJETOS
-            </h2>
-
-            <div
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 sm:gap-8 lg:gap-10 p-0 sm:p-4"
-              style={{
-                zIndex: '3',
-              }}
-            >
-              {carregando ? (
-                <div className="col-span-full flex justify-center items-center">
-                  <p>Carregando projetos...</p>
-                </div>
-              ) : erro ? (
-                <div className="col-span-full flex flex-col justify-center items-center">
-                  <Card>
-                    <p>Erro: {erro}</p>
-                    <button className="mt-2 px-4 py-1 rounded bg-cyan-700 text-white hover:bg-cyan-800 transition">
-                      Tentar novamente
-                    </button>
-                  </Card>
-                </div>
-              ) : (
-                <>
-                  {projetos.map((proj, key) => (
-                    <div
-                      key={key}
-                      className="rounded-xl border-[1px] bg-gray-900"
-                    >
-                      <div className="flex flex-col p-3 sm:p-6">
-                        <h3 className="text-lg sm:text-2xl font-semibold text-[#0ff]">
-                          {proj.name}
-                        </h3>
-                        <p
-                          className="text-[#0ff] text-base sm:text-md leading-tight"
-                          style={{
-                            transition:
-                              'text-shadow 0.8s, color 0.8s, transform 0.8s',
-                            userSelect: 'none',
-                          }}
-                        >
-                          {proj.description}
-                        </p>
-                        <div>
-                          {proj.topics &&
-                            proj.topics.map(topic => (
-                              <span
-                                key={topic}
-                                className="inline-block rounded-full bg-[#ad46ff] px-2 sm:px-3 py-0.5 sm:py-1 text-xs sm:text-sm font-semibold mr-1 sm:mr-2 transition-all tagesschrift-regular"
-                                style={{
-                                  userSelect: 'none',
-                                }}
-                              >
-                                {topic}
-                              </span>
-                            ))}
-                        </div>
-                        <a
-                          href={proj.homepage}
-                          target="_blank"
-                          className="inline-block text-primary-pink font-bold text-shadow-primary-pink hover:underline self-end-safe transition-all text-xs sm:text-base"
-                          style={{
-                            fontWeight: 700,
-                            letterSpacing: '0.5px',
-                          }}
-                        >
-                          Ver Detalhes &rarr;
-                        </a>
-                      </div>
-                    </div>
-                  ))}
-                  {projetos.length === 0 && (
-                    <Card>
-                      <p>Nenhum projeto encontrado nesta página.</p>
-                    </Card>
-                  )}
-                </>
-              )}
-            </div>
-
-            <div className="flex gap-6 justify-center md:justify-start mt-10">
-              <a
-                href="https://www.linkedin.com/in/flavio-leonardo-machado/"
-                target="_blank"
-                className="flex items-center justify-center p-4 rounded-full bg-black neon-pulse"
-                style={{
-                  transition: 'text-shadow 0.4s, color 0.4s, transform 0.4s',
-                  letterSpacing: '2px',
-                }}
-                onMouseEnter={fullNeon.onMouseEnter}
-                onMouseLeave={fullNeon.onMouseLeave}
-              >
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  style={{
-                    filter:
-                      'drop-shadow(0 0 1px #0ff) drop-shadow(0 0 6px #0ff)',
-                    transition: 'filter 0.3s',
-                  }}
-                >
-                  <path
-                    d="M3.60001 16H0.199997V5.3H3.60001V16ZM1.9 3.8C0.800002 3.8 0 3 0 1.9C0 0.8 0.900002 0 1.9 0C3 0 3.8 0.8 3.8 1.9C3.8 3 3 3.8 1.9 3.8ZM16 16H12.6V10.2C12.6 8.5 11.9 8 10.9 8C9.89999 8 8.89999 8.8 8.89999 10.3V16H5.5V5.3H8.7V6.8C9 6.1 10.2 5 11.9 5C13.8 5 15.8 6.1 15.8 9.4V16H16Z"
-                    fill="#0ff"
-                    style={{
-                      filter: 'drop-shadow(0 0 1px #0ff)',
-                      transition: 'filter 0.3s',
-                    }}
-                  />
-                </svg>
-              </a>
-              <a
-                href="https://github.com/LeonardoMachado30"
-                target="_blank"
-                className="flex items-center justify-center p-4 rounded-full bg-black neon-pulse"
-                style={{ letterSpacing: '2px' }}
-                onMouseEnter={fullNeon.onMouseEnter}
-                onMouseLeave={fullNeon.onMouseLeave}
-              >
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  style={{
-                    filter:
-                      'drop-shadow(0 0 1px #0ff) drop-shadow(0 0 6px #0ff)',
-                    transition: 'filter 0.3s',
-                  }}
-                >
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M7.97553 0C3.57186 0 0 3.57187 0 7.97553C0 11.4985 2.29969 14.4832 5.43119 15.5596C5.82263 15.6086 5.96942 15.3639 5.96942 15.1682C5.96942 14.9725 5.96942 14.4832 5.96942 13.7982C3.76758 14.2875 3.27829 12.7217 3.27829 12.7217C2.93578 11.792 2.39755 11.5474 2.39755 11.5474C1.66361 11.0581 2.44648 11.0581 2.44648 11.0581C3.22936 11.107 3.66972 11.8899 3.66972 11.8899C4.40367 13.1131 5.52905 12.7706 5.96942 12.5749C6.01835 12.0367 6.263 11.6942 6.45872 11.4985C4.69725 11.3028 2.83792 10.6177 2.83792 7.53517C2.83792 6.65443 3.1315 5.96942 3.66972 5.38226C3.62079 5.23547 3.32722 4.40367 3.76758 3.32722C3.76758 3.32722 4.4526 3.1315 5.96942 4.15902C6.6055 3.9633 7.29052 3.91437 7.97553 3.91437C8.66055 3.91437 9.34557 4.01223 9.98165 4.15902C11.4985 3.1315 12.1835 3.32722 12.1835 3.32722C12.6239 4.40367 12.3303 5.23547 12.2813 5.43119C12.7706 5.96942 13.1131 6.70336 13.1131 7.58410C13.1131 10.6667 11.2538 11.3028 9.49235 11.4985C9.78593 11.7431 10.0306 12.2324 10.0306 12.9664C10.0306 14.0428 10.0306 14.8746 10.0306 15.1682C10.0306 15.3639 10.1774 15.6086 10.5688 15.5596C13.7492 14.4832 16 11.4985 16 7.97553C15.9511 3.57187 12.3792 0 7.97553 0Z"
-                    fill="#0ff"
-                    style={{
-                      filter: 'drop-shadow(0 0 1px #0ff)',
-                      transition: 'filter 0.3s',
-                    }}
-                  />
-                </svg>
-              </a>
-            </div>
-          </section>
-
-          <footer className="text-shadow-primary text-[#0ff] text-center text-xs sm:text-base">
-            Todos os direitos reservados a Flávio Leonardo M. P.
-          </footer>
         </div>
+        <section id="projetos" data-scroll-section>
+          <h2
+            className="relative text-3xl sm:text-5xl font-bold text-center text-primary font-BitcountGridDouble-ExtraLight neon-blink-long mb-10"
+            style={{
+              letterSpacing: '2px',
+              lineHeight: '1.2',
+              userSelect: 'none',
+              zIndex: '-1',
+            }}
+          >
+            PROJETOS
+          </h2>
+
+          <div
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 sm:gap-8 lg:gap-10 p-0 sm:p-4"
+            style={{
+              zIndex: '3',
+            }}
+          >
+            {carregando ? (
+              <div className="col-span-full flex justify-center items-center">
+                <p>Carregando projetos...</p>
+              </div>
+            ) : erro ? (
+              <div className="col-span-full flex flex-col justify-center items-center">
+                <Card>
+                  <p>Erro: {erro}</p>
+                  <button className="mt-2 px-4 py-1 rounded bg-cyan-700 text-white hover:bg-cyan-800 transition">
+                    Tentar novamente
+                  </button>
+                </Card>
+              </div>
+            ) : (
+              <>
+                {projetosPaginados.map((proj, key) => (
+                  <div
+                    key={key}
+                    className="rounded-xl border-[1px] bg-gray-900 mx-4"
+                  >
+                    <div className="flex flex-col px-8 p-4 sm:p-6">
+                      <h3 className="text-lg sm:text-2xl font-semibold text-[#0ff]">
+                        {proj.name}
+                      </h3>
+                      <p
+                        className="text-[#0ff] text-sm sm:text-md leading-tight"
+                        style={{
+                          transition:
+                            'text-shadow 0.8s, color 0.8s, transform 0.8s',
+                          userSelect: 'none',
+                        }}
+                      >
+                        {proj.description}
+                      </p>
+                      <div className="mt-4 mb-2">
+                        {proj.topics &&
+                          proj.topics.map(topic => (
+                            <span
+                              key={topic}
+                              className="inline-block rounded-full bg-[#ad46ff] px-2 sm:px-3 py-0.5 sm:py-1 text-xs sm:text-sm font-semibold mr-1 sm:mr-2 transition-all tagesschrift-regular mb-2"
+                              style={{
+                                userSelect: 'none',
+                              }}
+                            >
+                              {topic}
+                            </span>
+                          ))}
+                      </div>
+                      <a
+                        href={proj.homepage}
+                        target="_blank"
+                        className="inline-block text-primary-pink font-bold text-shadow-primary-pink hover:underline self-end-safe transition-all text-xs sm:text-base"
+                        style={{
+                          fontWeight: 700,
+                          letterSpacing: '0.5px',
+                        }}
+                      >
+                        Ver Detalhes{' '}
+                        <span className="material-icons-outlined">
+                          arrow_outward
+                        </span>
+                      </a>
+                    </div>
+                  </div>
+                ))}
+                {projetosPaginados.length === 0 && (
+                  <Card>
+                    <p>Nenhum projeto encontrado nesta página.</p>
+                  </Card>
+                )}
+              </>
+            )}
+          </div>
+
+          {/* Paginação */}
+          {totalPaginas > 1 && (
+            <div className="flex justify-center items-center mt-8 gap-2">
+              <button
+                className="px-3 py-1 rounded bg-cyan-700 text-white hover:bg-cyan-800 transition disabled:opacity-50"
+                onClick={() => setPaginaAtual(paginaAtual - 1)}
+                disabled={paginaAtual === 1}
+              >
+                Anterior
+              </button>
+              <span className="mx-2 text-cyan-200">
+                Página {paginaAtual} de {totalPaginas}
+              </span>
+              <button
+                className="px-3 py-1 rounded bg-cyan-700 text-white hover:bg-cyan-800 transition disabled:opacity-50"
+                onClick={() => setPaginaAtual(paginaAtual + 1)}
+                disabled={paginaAtual === totalPaginas}
+              >
+                Próxima
+              </button>
+            </div>
+          )}
+
+          <div className="flex gap-6 justify-center md:justify-start mt-10">
+            <a
+              href="https://www.linkedin.com/in/flavio-leonardo-machado/"
+              target="_blank"
+              className="flex items-center justify-center p-4 rounded-full bg-black neon-pulse"
+              style={{
+                transition: 'text-shadow 0.4s, color 0.4s, transform 0.4s',
+                letterSpacing: '2px',
+              }}
+              onMouseEnter={fullNeon.onMouseEnter}
+              onMouseLeave={fullNeon.onMouseLeave}
+            >
+              <IconLinkedin />
+            </a>
+            <a
+              href="https://github.com/LeonardoMachado30"
+              target="_blank"
+              className="flex items-center justify-center p-4 rounded-full bg-black neon-pulse"
+              style={{ letterSpacing: '2px' }}
+              onMouseEnter={fullNeon.onMouseEnter}
+              onMouseLeave={fullNeon.onMouseLeave}
+            >
+              <IconGithub />
+            </a>
+          </div>
+        </section>
       </div>
     </>
   );
