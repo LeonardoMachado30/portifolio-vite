@@ -4,6 +4,8 @@
 @import 'material-icons/iconfont/outlined.css'; */
 @import './colors.scss';
 @import './styles/animations.css';
+/* 
+@import url('https://fonts.googleapis.com/css2?family=Bitcount+Grid+Double:wght@100..900&family=Bungee&family=Freeman&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Tagesschrift&display=swap'); */
 
 @font-face {
   font-family: 'BitcountGridDouble';
@@ -12,8 +14,6 @@
   font-style: normal;
   font-display: swap;
 }
-
-@import url('https://fonts.googleapis.com/css2?family=Bitcount+Grid+Double:wght@100..900&family=Bungee&family=Freeman&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Tagesschrift&display=swap');
 
 .tagesschrift-regular {
   font-family: 'Tagesschrift', system-ui;
@@ -34,17 +34,14 @@
 }
 
 /* Adicione scroll-behavior também no html para garantir */
-html,
-body,
-main,
-#root {
+html {
   font-family: 'BitcountGridDouble', system-ui;
-  height: 100%;
+  /* height: 100%; */
   overflow: hidden; /* bloqueia scroll nativo */
 }
 
-[data-scroll-container] {
-  min-height: 100vh;
+[data-scroll-container] > :last-child {
+  padding-bottom: 20vh; /* ou mais */
 }
 
 .text-shadow-primary {
