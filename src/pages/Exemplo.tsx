@@ -174,10 +174,10 @@ export function Exemplo() {
     const scroll = new LocomotiveScroll({
       el: containerRef.current!,
       smooth: isMobile ? false : true,
-      lerp: isMobile ? 0.16 : 0.07, // aumenta a velocidade no mobile
-      multiplier: isMobile ? 1.8 : 1, // aumenta a velocidade no mobile
+      lerp: isMobile ? 1 : 0.07, // aumenta a velocidade no mobile
+      multiplier: isMobile ? 1 : 1, // aumenta a velocidade no mobile
       smartphone: {
-        smooth: true,
+        smooth: isMobile ? false : true,
         direction: 'vertical',
       },
     });
