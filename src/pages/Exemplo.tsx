@@ -86,7 +86,7 @@ export function Exemplo() {
       el: containerRef.current!,
       smooth: true,
       lerp: isMobile ? 0.24 : 0.07, // aumenta a velocidade no mobile
-      multiplier: isMobile ? 2 : 1, // aumenta a velocidade no mobile
+      multiplier: isMobile ? 1.8 : 1, // aumenta a velocidade no mobile
       smartphone: {
         smooth: true,
         direction: 'vertical',
