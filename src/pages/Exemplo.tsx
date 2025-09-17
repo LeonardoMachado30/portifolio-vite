@@ -164,30 +164,31 @@ export function Exemplo() {
     const fetchAndInit = async () => {
       if (!containerRef.current) return;
       await loadProjetos();
-
       // O restante do código do useEffect permanece igual
     };
 
     fetchAndInit();
 
-    // Detecta a largura da tela para ajustar lerp e multiplier no mobile
-    const scroll = new LocomotiveScroll({
-      el: containerRef.current!,
-      smooth: isMobile ? false : true,
-      lerp: isMobile ? 1 : 0.07, // aumenta a velocidade no mobile
-      multiplier: isMobile ? 1 : 1, // aumenta a velocidade no mobile
-      tablet: {
+    // Só inicializa o LocomotiveScroll no desktop
+    let scroll: LocomotiveScroll | null = null;
+    if (!isMobile && containerRef.current) {
+      scroll = new LocomotiveScroll({
+        el: containerRef.current,
         smooth: true,
-        direction: 'vertical',
-        breakpoint: 720,
-      },
-      smartphone: {
-        smooth: true,
-        direction: 'vertical',
-      },
-    });
-
-    scrollRef.current = scroll;
+        lerp: 0.07,
+        multiplier: 1,
+        tablet: {
+          smooth: true,
+          direction: 'vertical',
+          breakpoint: 720,
+        },
+        smartphone: {
+          smooth: true,
+          direction: 'vertical',
+        },
+      });
+      scrollRef.current = scroll;
+    }
 
     return () => {
       if (scroll) scroll.destroy();
