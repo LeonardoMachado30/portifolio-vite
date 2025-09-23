@@ -1,110 +1,99 @@
-import Card from '@/components/molecules/Card';
+import Lenis from '@studio-freight/lenis';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useEffect, useRef } from 'react';
 
-export function Resume() {
+gsap.registerPlugin(ScrollTrigger);
+
+export default function Resume() {
+  const lenisRef = useRef<Lenis | null>(null);
+
+  useEffect(() => {
+    const lenis = new Lenis({
+      lerp: 0.02,
+      duration: 1.2,
+      // smooth: true,
+    });
+    lenisRef.current = lenis;
+
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    lenis.on('scroll', ScrollTrigger.update);
+
+    ScrollTrigger.scrollerProxy(document.body, {
+      scrollTop(value) {
+        return arguments.length ? lenis.scrollTo(value) : lenis.scroll;
+      },
+      getBoundingClientRect() {
+        return {
+          top: 0,
+          left: 0,
+          width: window.innerWidth,
+          height: window.innerHeight,
+        };
+      },
+    });
+
+    gsap.fromTo(
+      '.box',
+      { y: 100, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        scrollTrigger: {
+          trigger: '.box',
+          start: 'top 80%',
+          end: 'top 50%',
+          scrub: true,
+          scroller: document.body,
+        },
+      }
+    );
+
+    gsap.to('.parallax', {
+      y: -100,
+      scrollTrigger: {
+        trigger: '.parallax-section',
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: true,
+        scroller: document.body,
+      },
+    });
+
+    return () => {
+      lenis.destroy();
+      ScrollTrigger.killAll();
+    };
+  }, []);
+
   return (
-    <section className="opacity-0 animate-[slideInTop_1.2s_cubic-bezier(0.4,0,0.2,1)_forwards,fadeIn_1s_linear_forwards]">
-      <Card title={{ label: 'RESUMO', className: 'text-center' }}>
-        <p>
-          <span role="img" aria-label="notebook">
-            💻
-          </span>{' '}
-          <strong>
-            Desenvolvedor Front-end | Vue.js | React | Node.js | Escalabilidade
-            e Performance
-          </strong>
-        </p>
-        <p>
-          Sou apaixonado por criar soluções web escaláveis e acessíveis, unindo
-          visão técnica e foco no usuário. Formado em Análise e Desenvolvimento
-          de Sistemas pela UNIP (2021), sigo em constante evolução para entregar
-          resultados de alto impacto.
-        </p>
-        <p>
-          <span role="img" aria-label="foguete">
-            🚀
-          </span>{' '}
-          <strong>Experiência em Resultados</strong>
-        </p>
-        <ul className="list-disc ml-6 mb-2">
-          <li>
-            <strong>Trabalha Brasil:</strong> 2º lugar em hackathon interno no
-            3º mês de estágio → promoção a Front-end Júnior. Migração de jQuery
-            2.2 → 3.7 (+20% performance).
-          </li>
-          <li>
-            <strong>Grupo LAPM:</strong> Liderança na migração Vue 2 →
-            Composition API, otimização de biometria facial e implementação de
-            rede social com chat em tempo real.
-          </li>
-        </ul>
-        <p>
-          <span role="img" aria-label="ferramentas">
-            🛠
-          </span>{' '}
-          <strong>Hard Skills</strong>
-        </p>
-        <ul className="list-disc ml-6 mb-2">
-          <li>
-            <strong>Full-stack:</strong> Nuxt, Next.js, Quasar Framework,
-            desenvolvimento de plataformas SaaS, CRM e ATS personalizados
-          </li>
-          <li>
-            <strong>Front-end:</strong> Vue.js, React, Angular, Tailwind CSS,
-            Bootstrap, MUI, otimização de performance e acessibilidade
-          </li>
-          <li>
-            <strong>Back-end:</strong> Node.js (Express, Prisma, Zup), PHP
-            (Laravel), criação de APIs REST e GraphQL, integração com APIs
-            externas
-          </li>
-          <li>
-            <strong>DevOps & Cloud:</strong> Docker, Git/GitHub, CI/CD,
-            hospedagem em Vercel/Render, otimização de deploy
-          </li>
-          <li>
-            <strong>Banco de Dados:</strong> MySQL, PostgreSQL, MongoDB, SQLite,
-            modelagem relacional e não relacional
-          </li>
-          <li>
-            <strong>Mobile:</strong> React Native, CapacitorJS, Expo
-          </li>
-          <li>
-            <strong>Outros:</strong> TypeScript, Zod/Yup, bcryptjs, Axios,
-            Firebase, scraping de dados, cache com LRU, busca fuzzy
-          </li>
-        </ul>
-        <p>
-          <span role="img" aria-label="aperto de mãos">
-            🤝
-          </span>{' '}
-          <strong>Soft Skills</strong>
-        </p>
-        <ul className="list-disc ml-6 mb-2">
-          <li>Comunicação técnica e interpessoal</li>
-          <li>Liderança e mentoria de equipe</li>
-          <li>Assiduidade e confiabilidade</li>
-          <li>Gestão ágil (Scrum/Kanban)</li>
-          <li>Documentação e padronização de processos</li>
-          <li>Resolução estratégica de conflitos técnicos</li>
-          <li>Proatividade na identificação e solução de problemas</li>
-          <li>Adaptabilidade a novas tecnologias</li>
-          <li>Colaboração multidisciplinar</li>
-          <li>Pensamento crítico orientado a resultados</li>
-        </ul>
-        <p>
-          <span role="img" aria-label="gráfico de crescimento">
-            📈
-          </span>{' '}
-          <strong>Objetivo</strong>
-        </p>
-        <p>
-          Atuar em projetos onde eu possa aplicar meus conhecimentos técnicos
-          para gerar impacto real, contribuindo também para o desenvolvimento
-          pessoal e profissional de outras pessoas. Busco um ambiente
-          colaborativo, com independência e autonomia, que valorize troca de
-          ideias, aprendizado contínuo e inovação.
-        </p>
-      </Card>
-    </section>
+    <main className="space-y-40 p-10">
+      <section className="h-screen flex items-center justify-center bg-gray-900 text-white">
+        <h1 className="text-4xl">Scroll Down 🚀</h1>
+      </section>
+
+      <section className="h-screen flex items-center justify-center bg-blue-500">
+        <div className="box text-3xl text-white font-bold">
+          Fade in + Move Up
+        </div>
+      </section>
+
+      <section className="parallax-section h-screen bg-green-600 relative overflow-hidden">
+        <img
+          src="https://picsum.photos/1200/800"
+          className="parallax absolute w-full h-full object-cover"
+          alt="parallax"
+        />
+        <div className="relative z-10 text-white text-4xl p-10">
+          Parallax Effect 🌄
+        </div>
+      </section>
+    </main>
   );
 }

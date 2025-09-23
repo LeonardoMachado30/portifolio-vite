@@ -6,7 +6,7 @@ import App from './App.tsx';
 import './index.scss';
 import { Exemplo } from './pages/Exemplo.tsx';
 import { Projetos } from './pages/Projetos.tsx';
-import { Resume } from './pages/Resume.tsx';
+import Resume from './pages/Resume.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
