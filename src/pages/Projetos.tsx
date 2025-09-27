@@ -143,6 +143,48 @@ export function Portfolio() {
     },
   ];
 
+  // Function to extract image from README content
+  const extractImageFromReadme = (
+    readmeContent: string,
+    repoName: string
+  ): string | null => {
+    try {
+      // Decode base64 content
+      const content = atob(readmeContent);
+
+      // Regex patterns to find images in markdown
+      const imagePatterns = [
+        // ![alt](url) or ![](url)
+        /!\[.*?\]\((https?:\/\/[^\s\)]+\.(?:png|jpg|jpeg|gif|webp|svg))\)/i,
+        // <img src="url">
+        /<img[^>]+src=["']([^"']+\.(?:png|jpg|jpeg|gif|webp|svg))["'][^>]*>/i,
+        // GitHub raw images
+        /https:\/\/raw\.githubusercontent\.com\/[^\s\)]+\.(?:png|jpg|jpeg|gif|webp|svg)/i,
+        // GitHub user content images
+        /https:\/\/user-images\.githubusercontent\.com\/[^\s\)]+\.(?:png|jpg|jpeg|gif|webp|svg)/i,
+      ];
+
+      for (const pattern of imagePatterns) {
+        const match = content.match(pattern);
+        if (match) {
+          return match[1] || match[0];
+        }
+      }
+
+      // If no image found, try to construct a common screenshot path
+      const commonPaths = [
+        `https://raw.githubusercontent.com/LeonardoMachado30/${repoName}/main/screenshot.png`,
+        `https://raw.githubusercontent.com/LeonardoMachado30/${repoName}/main/preview.png`,
+        `https://raw.githubusercontent.com/LeonardoMachado30/${repoName}/main/demo.png`,
+        `https://raw.githubusercontent.com/LeonardoMachado30/${repoName}/master/screenshot.png`,
+      ];
+
+      return commonPaths[0]; // Return first common path as fallback
+    } catch (error) {
+      return null;
+    }
+  };
+
   async function fetchProjetosGithub(): Promise<Projeto[]> {
     const response = await fetch(
       'https://api.github.com/users/LeonardoMachado30/repos'
@@ -151,6 +193,7 @@ export function Portfolio() {
       throw new Error('Erro ao buscar projetos do GitHub');
     }
     const data = await response.json();
+
     return data
       .map((repo: any) => ({
         name: repo.name,
