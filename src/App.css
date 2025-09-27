@@ -35,9 +35,13 @@
 
 /* Adicione scroll-behavior também no html para garantir */
 html {
-  font-family: 'BitcountGridDouble', system-ui;
+  /* font-family: 'BitcountGridDouble', system-ui; */
   /* height: 100%; */
   /* overflow: hidden; */
+}
+
+body {
+  scroll-behavior: smooth;
 }
 
 [data-scroll-container] > :last-child {
