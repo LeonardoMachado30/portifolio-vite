@@ -26,7 +26,7 @@ export default function Resume() {
 
     ScrollTrigger.scrollerProxy(document.body, {
       scrollTop(value) {
-        return arguments.length ? lenis.scrollTo(value) : lenis.scroll;
+        return arguments.length ? lenis.scrollTo(value as any) : lenis.scroll;
       },
       getBoundingClientRect() {
         return {
