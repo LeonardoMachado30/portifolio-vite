@@ -1,11 +1,21 @@
 import { useEffect, useRef, useState } from 'react';
+import { ACHIEVEMENTS } from '../utils/ACHIEVEMENTS';
+import { EXPERIENCES } from '../utils/EXPERIENCES';
+import { ME } from '../utils/ME';
+import { projetosEmpresa } from '../utils/PROJETOS_EMPRESA';
+import { SOFT_SKILLS } from '../utils/SOFT_SKILLS';
+import {
+  TECH_STACK_BACKEND,
+  TECH_STACK_BANCO_INFRA,
+  TECH_STACK_FRONTEND,
+} from '../utils/TECH_STACK';
 
-type Projeto = {
+export type Projeto = {
   name: string;
   html_url: string;
   language: string | null;
   topics: string[];
-  homepage: string | null;
+  homepage: string;
   description?: string | null;
 };
 
@@ -20,150 +30,6 @@ export function Portfolio() {
   const [carregando, setCarregando] = useState(false);
   const [erro, setErro] = useState<string | null>(null);
 
-  const ME = {
-    name: 'Flávio Leonardo Machado de Pádua',
-    role: 'Desenvolvedor Full-stack',
-    title:
-      'Desenvolvedor especializado em Front-end com sólida vivência em Back-end',
-    location: 'Brasília',
-    about:
-      'Desenvolvedor apaixonado por criar aplicações web escaláveis e acessíveis. Com experiência sólida em desenvolvimento de CRMs, ATS e plataformas SaaS, busco sempre a excelência técnica, implementação de boas práticas e aprendizagem contínua para entregar soluções de alta qualidade.',
-    education: 'Análise e Desenvolvimento de Sistemas - UNIP (2021)',
-    email: 'flmp.leonardo@gmail.com',
-    linkedin: 'https://linkedin.com/in/flavio-leonardo',
-    github: 'https://github.com/LeonardoMachado30',
-    phone: '+55 (61) 9 8109-5126',
-  };
-
-  const TECH_STACK_FRONTEND = [
-    { name: 'TypeScript', icon: '🔷', category: 'language' },
-    { name: 'React', icon: '⚛️', category: 'frontend' },
-    { name: 'Vue.js', icon: '💚', category: 'frontend' },
-    { name: 'JQuery', icon: '🎯', category: 'frontend' },
-    { name: 'Next.js', icon: '▲', category: 'frontend' },
-    { name: 'Quasar Framework', icon: '💎', category: 'frontend' },
-    { name: 'SASS', icon: '🎨', category: 'styling' },
-    { name: 'Bootstrap', icon: '🅱️', category: 'styling' },
-    { name: 'Tailwind CSS', icon: '🎨', category: 'styling' },
-    { name: 'GSAP', icon: '✨', category: 'animation' },
-  ];
-
-  const TECH_STACK_BACKEND = [
-    { name: 'Node.js', icon: '🟢', category: 'backend' },
-    { name: 'PHP', icon: '🐘', category: 'backend' },
-    { name: 'Laravel', icon: '🎵', category: 'backend' },
-    { name: 'Firebase', icon: '🔥', category: 'backend' },
-  ];
-
-  const TECH_STACK_BANCO_INFRA = [
-    { name: 'PostgreSQL', icon: '🐘', category: 'database' },
-    { name: 'MySQL', icon: '🗄️', category: 'database' },
-    { name: 'SQLite', icon: '📦', category: 'database' },
-    { name: 'Prisma', icon: '🔺', category: 'database' },
-    { name: 'Eloquent', icon: '🗄️', category: 'database' },
-    { name: 'JWT', icon: '🔑', category: 'security' },
-    { name: 'Automação', icon: '⚙️', category: 'devops' },
-    { name: 'Docker', icon: '🐳', category: 'devops' },
-    // { name: 'Capacitor', icon: '📱', category: 'mobile' },
-    // { name: 'Expo', icon: '📦', category: 'mobile' },
-  ];
-
-  const SOFT_SKILLS = [
-    'Comunicação eficaz',
-    'Proatividade e iniciativa',
-    'Resolução de problemas',
-    'Trabalho em equipe',
-    'Independência e autonomia',
-    'Agilidade e adaptabilidade',
-    'Pensamento analítico',
-    'Liderança técnica',
-  ];
-
-  const EXPERIENCES = [
-    {
-      company: 'AURA R&S Labs',
-      title: 'Desenvolvedor Full Stack',
-      period: 'jun de 2025 – o momento · 4 meses',
-      location: 'Brasília, Distrito Federal, Brasil · Remota',
-      description:
-        'Responsável por arquitetura modular, escalabilidade, segurança e performance em sistema CRM + ATS. Foco em organização, reuso, integração e entrega de valor.',
-      highlights: [
-        'Full stack: Next.js, TypeScript, Prisma, Firebase',
-        'Arquitetura modular (backend/frontend), Atomic Design',
-        'Autenticação, segurança, integrações externas',
-        'Componentização, APIs REST, Redux, Tailwind',
-        'Performance, manutenção e escalabilidade',
-      ],
-    },
-    {
-      company: 'Grupo LAPM',
-      title: 'Desenvolvedor Full-stack',
-      period: 'fev de 2024 – mar de 2025 · 1 ano 2 meses',
-      location: 'Brasília, Distrito Federal, Brasil · Presencial',
-      description:
-        'Liderança técnica, inovação, modernização de stack e foco em performance e redução de custos.',
-      highlights: [
-        'Migração Vue 2→3, Vuex→Pinia: +60% performance',
-        'Biometria: Python→Vue/Tensorflow, +80% performance, -4% custos',
-        'Otimização DevOps: pipelines mais rápidos',
-        'Modernização com ES6+, mitigação de erros',
-        'Stack: Vue.js, Azure DevOps, GCP, TypeScript, Node.js, PHP, MySQL',
-      ],
-    },
-    {
-      company: 'Trabalha Brasil',
-      title: 'Desenvolvedor Front-end',
-      period: 'jun de 2021 – jan de 2023 · 1 ano 8 meses',
-      location: 'Colombo, Paraná, Brasil',
-      description:
-        'Promoção por destaque. Foco em performance, modernização e SEO.',
-      highlights: [
-        'Migração jQuery 2.2→3.7: +20% performance',
-        'Códigos modernos, redução de obsolescência',
-        'SSR/SSG com Razor e Blazor (.NET)',
-        'SEO e ranqueamento aprimorados',
-        'Stack: Azure DevOps, Scrum, C#, TypeScript, Node.js, PostgreSQL',
-      ],
-    },
-    {
-      company: 'Trabalha Brasil',
-      title: 'Estagiário de Front-end',
-      period: 'abr de 2021 – jun de 2021 · 3 meses',
-      location: 'Colombo, Paraná, Brasil',
-      description:
-        'Destaque em projetos internos, rápido crescimento e entrega de valor.',
-      highlights: [
-        '2º lugar em projeto interno (front-end)',
-        'Promoção rápida após hackathon',
-        'Interfaces com HTML5, CSS, Bootstrap, Git',
-        'Trabalho em equipe e resolução de problemas',
-      ],
-    },
-  ];
-
-  const ACHIEVEMENTS = [
-    {
-      title: 'Sistemas de Alta Performance',
-      description:
-        'Otimizações que resultaram em melhorias de até 40% na velocidade de carregamento',
-    },
-    {
-      title: 'Arquitetura Escalável',
-      description:
-        'Design de sistemas que suportam milhares de usuários simultâneos',
-    },
-    {
-      title: 'Liderança Técnica',
-      description:
-        'Gestão de equipes multidisciplinares e mentoria de desenvolvedores junior',
-    },
-    {
-      title: 'Inovação Contínua',
-      description:
-        'Implementação de tecnologias emergentes e boas práticas de desenvolvimento',
-    },
-  ];
-
   async function fetchProjetosGithub(): Promise<Projeto[]> {
     const response = await fetch(
       'https://api.github.com/users/LeonardoMachado30/repos'
@@ -173,16 +39,31 @@ export function Portfolio() {
     }
     const data = await response.json();
 
-    return data
-      .map((repo: any) => ({
-        name: repo.name,
-        html_url: repo.html_url,
-        language: repo.language,
-        topics: repo.topics || [],
-        homepage: repo.homepage,
-        description: repo.description || null,
-      }))
-      .filter((repo: Projeto) => !repo.name.includes('LeonardoMachado30')); // Filter out profile readme
+    return [
+      ...projetosEmpresa,
+      ...data
+        .map((repo: any) => ({
+          name: repo.name
+            .replace(/[_-]/g, ' ')
+            .replace(/[^a-zA-Z ]/g, '')
+            .replace(/\s+/g, ' ')
+            .trim()
+            .replace(/\b\w/g, (l: any) => l.toUpperCase()),
+          html_url: repo.html_url,
+          language: repo.language,
+          topics: repo.topics || [],
+          homepage: repo.homepage,
+          description: repo.description || null,
+        }))
+        .filter(
+          (repo: Projeto) =>
+            !repo.name.includes('LeonardoMachado30') &&
+            repo.homepage &&
+            !repo.name.toLowerCase().includes('college') &&
+            !repo.name.toLowerCase().includes('pokemons') &&
+            !repo.name.toLowerCase().includes('portifolio')
+        ),
+    ];
   }
 
   useEffect(() => {
@@ -271,15 +152,15 @@ export function Portfolio() {
       </nav>
 
       {/* Hero Section */}
-      <section ref={heroRef} className="pt-32 pb-20 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <section ref={heroRef} className="pt-32 pb-20 px-6 ">
+        <div className="max-w-7xl mx-auto ">
+          <div className="grid lg:grid-cols-2 gap-12 items-center ">
             <div>
               <h1 className="hero-animate text-5xl lg:text-6xl font-bold text-slate-900 leading-tight mb-6 opacity-0 translate-y-8 transition-all duration-1000">
                 Criando soluções web
                 <span className="text-blue-600 block">escaláveis</span>
               </h1>
-              <p className="hero-animate text-xl text-slate-600 mb-4 opacity-0 translate-y-8 transition-all duration-1000">
+              <p className="hero-animate text-xl text-slate-600 mb-4 translate-y-8 transition-all duration-1000">
                 {ME.role}
               </p>
               <p className="hero-animate text-lg text-slate-500 mb-8 max-w-lg leading-relaxed opacity-0 translate-y-8 transition-all duration-1000">
@@ -309,7 +190,7 @@ export function Portfolio() {
                   </div>
                 </a>
                 <a href="#projects">
-                  <div className="text-2xl font-bold text-slate-900">10+</div>
+                  <div className="text-2xl font-bold text-slate-900">6+</div>
                   <div className="text-sm text-slate-600">
                     Projetos Entregues
                   </div>
@@ -322,13 +203,15 @@ export function Portfolio() {
             </div>
 
             <div className="relative">
-              <div className="w-full max-w-md mx-auto">
+              <div className="w-full max-w-md mx-auto hover:scale-105 hover:-translate-y-1 hover:shadow-md">
                 <div className="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl p-8 text-blue-500 shadow-2xl">
                   <div className="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center text-3xl font-bold mb-6 mx-auto overflow-hidden">
                     <img
                       src="/profile.png"
                       alt="Avatar de Flávio Leonardo"
-                      className="w-full h-full object-cover"
+                      className="h-full object-cover"
+                      width={200}
+                      height={200}
                     />
                   </div>
                   <h3 className="text-xl font-semibold text-center mb-2">
@@ -467,7 +350,7 @@ export function Portfolio() {
             {TECH_STACK_FRONTEND.map((tech, index) => (
               <div
                 key={index}
-                className="skill-card bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition-all group hover:scale-105 hover:-translate-y-1"
+                className="skill-card bg-white p-4 rounded-xl shadow-sm  transition-all group hover:scale-105 hover:-translate-y-1 hover:shadow-md"
               >
                 <div className="text-3xl mb-4 group-hover:scale-110 transition-transform">
                   {tech.icon}
@@ -525,25 +408,6 @@ export function Portfolio() {
               </div>
             ))}
           </div>
-
-          {/* <div className="skills-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-            {TECH_STACK.map((tech, index) => (
-              <div
-                key={index}
-                className="skill-card bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all group hover:scale-105 hover:-translate-y-1"
-              >
-                <div className="text-3xl mb-4 group-hover:scale-110 transition-transform">
-                  {tech.icon}
-                </div>
-                <h3 className="font-semibold text-slate-900 mb-2">
-                  {tech.name}
-                </h3>
-                <div className="text-xs text-slate-500 capitalize">
-                  {tech.category}
-                </div>
-              </div>
-            ))}
-          </div> */}
 
           <div className="mt-16 text-center">
             <h3 className="text-xl font-semibold text-slate-900 mb-6">
@@ -673,7 +537,7 @@ export function Portfolio() {
                     </h3>
                     <div className="flex gap-2">
                       <a
-                        href={projeto.html_url}
+                        href={projeto.homepage}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-slate-400 hover:text-slate-600 transition-colors"
@@ -738,22 +602,16 @@ export function Portfolio() {
         ref={contactRef}
         className="observe-section py-20 px-6 bg-white opacity-0 translate-y-8 transition-all duration-1000"
       >
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-slate-900 mb-4">
-              Vamos Conversar?
-            </h2>
-            <p className="text-xl text-slate-600">
-              Estou sempre aberto a novos desafios e oportunidades
-            </p>
-          </div>
+        <div className="max-w-7xl mx-auto bg-blue-200 p-8 rounded-2xl">
+          <h3 className="text-2xl font-semibold text-slate-900 mb-2 text-center">
+            Entre em Contato
+          </h3>
+          <p className="text-xl text-slate-600 text-center mb-10">
+            Estou sempre aberto a novos desafios e oportunidades
+          </p>
 
           <div className="grid lg:grid-cols-2 gap-12">
             <div>
-              <h3 className="text-2xl font-semibold text-slate-900 mb-8">
-                Entre em Contato
-              </h3>
-
               <div className="space-y-6">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
@@ -809,7 +667,9 @@ export function Portfolio() {
                     <span className="text-blue-600 text-xl">📱</span>
                   </div>
                   <div>
-                    <p className="font-medium text-slate-900">Telefone</p>
+                    <p className="font-medium text-slate-900">
+                      Telefone/WhatsApp
+                    </p>
                     <a
                       href={`tel:${ME.phone}`}
                       className="text-blue-600 hover:underline"
@@ -914,29 +774,29 @@ export function Portfolio() {
           </div>
 
           {/* CTA Section */}
-          <div className="mt-20 text-center">
-            <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-12 text-white">
-              <h3 className="text-3xl font-bold mb-4">Pronto para começar?</h3>
-              <p className="text-xl text-blue-400 mb-8 max-w-2xl mx-auto">
-                Transforme suas ideias em realidade com soluções web modernas e
-                escaláveis. Vamos criar algo incrível juntos!
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a
-                  href={`mailto:${ME.email}`}
-                  className="bg-white text-blue-600 px-8 py-4 rounded-lg hover:bg-blue-50 transition-colors font-semibold"
-                >
-                  Conversar por Email
-                </a>
-                <a
-                  href={ME.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="border-2 border-white text-blue-600 px-8 py-4 rounded-lg hover:bg-white hover:text-blue-600 transition-colors font-semibold"
-                >
-                  Conectar no LinkedIn
-                </a>
-              </div>
+        </div>
+        <div className="mt-20 text-center">
+          <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-12">
+            <h3 className="text-3xl font-bold mb-4">Pronto para começar?</h3>
+            <p className="text-xl text-blue-400 mb-8 max-w-2xl mx-auto">
+              Transforme suas ideias em realidade com soluções web modernas e
+              escaláveis. Vamos criar algo incrível juntos!
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a
+                href={`mailto:${ME.email}`}
+                className="bg-white text-blue-600 px-8 py-4 rounded-lg hover:bg-blue-50 transition-colors font-semibold"
+              >
+                Conversar por Email
+              </a>
+              <a
+                href={ME.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white text-blue-600 px-8 py-4 rounded-lg hover:bg-blue-50 transition-colors font-semibold"
+              >
+                Conectar no LinkedIn
+              </a>
             </div>
           </div>
         </div>
