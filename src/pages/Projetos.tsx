@@ -23,7 +23,8 @@ export function Portfolio() {
   const ME = {
     name: 'Flávio Leonardo Machado de Pádua',
     role: 'Desenvolvedor Full-stack',
-    title: 'React • Vue • TypeScript • Node.js • Next.js • Nest.js',
+    title:
+      'Desenvolvedor especializado em Front-end com sólida vivência em Back-end',
     location: 'Brasília',
     about:
       'Desenvolvedor apaixonado por criar aplicações web escaláveis e acessíveis. Com experiência sólida em desenvolvimento de CRMs, ATS e plataformas SaaS, busco sempre a excelência técnica, implementação de boas práticas e aprendizagem contínua para entregar soluções de alta qualidade.',
@@ -34,17 +35,37 @@ export function Portfolio() {
     phone: '+55 (61) 9 8109-5126',
   };
 
-  const TECH_STACK = [
+  const TECH_STACK_FRONTEND = [
     { name: 'TypeScript', icon: '🔷', category: 'language' },
     { name: 'React', icon: '⚛️', category: 'frontend' },
-    { name: 'Next.js', icon: '▲', category: 'frontend' },
     { name: 'Vue.js', icon: '💚', category: 'frontend' },
-    { name: 'Node.js', icon: '🟢', category: 'backend' },
-    { name: 'Prisma', icon: '🔺', category: 'database' },
-    { name: 'PostgreSQL', icon: '🐘', category: 'database' },
+    { name: 'JQuery', icon: '🎯', category: 'frontend' },
+    { name: 'Next.js', icon: '▲', category: 'frontend' },
+    { name: 'Quasar Framework', icon: '💎', category: 'frontend' },
+    { name: 'SASS', icon: '🎨', category: 'styling' },
+    { name: 'Bootstrap', icon: '🅱️', category: 'styling' },
     { name: 'Tailwind CSS', icon: '🎨', category: 'styling' },
-    { name: 'Docker', icon: '🐳', category: 'devops' },
     { name: 'GSAP', icon: '✨', category: 'animation' },
+  ];
+
+  const TECH_STACK_BACKEND = [
+    { name: 'Node.js', icon: '🟢', category: 'backend' },
+    { name: 'PHP', icon: '🐘', category: 'backend' },
+    { name: 'Laravel', icon: '🎵', category: 'backend' },
+    { name: 'Firebase', icon: '🔥', category: 'backend' },
+  ];
+
+  const TECH_STACK_BANCO_INFRA = [
+    { name: 'PostgreSQL', icon: '🐘', category: 'database' },
+    { name: 'MySQL', icon: '🗄️', category: 'database' },
+    { name: 'SQLite', icon: '📦', category: 'database' },
+    { name: 'Prisma', icon: '🔺', category: 'database' },
+    { name: 'Eloquent', icon: '🗄️', category: 'database' },
+    { name: 'JWT', icon: '🔑', category: 'security' },
+    { name: 'Automação', icon: '⚙️', category: 'devops' },
+    { name: 'Docker', icon: '🐳', category: 'devops' },
+    // { name: 'Capacitor', icon: '📱', category: 'mobile' },
+    // { name: 'Expo', icon: '📦', category: 'mobile' },
   ];
 
   const SOFT_SKILLS = [
@@ -319,10 +340,15 @@ export function Portfolio() {
                       <span>📍</span>
                       <span>{ME.location}</span>
                     </div>
-                    <div className="flex items-center justify-center gap-2">
+                    <a
+                      href="https://drive.google.com/file/d/1i7DKDmGk70Ele0ciIMWIly7v72NOfY_T/view?usp=sharing"
+                      target="_blank"
+                      className="flex items-center justify-center gap-2"
+                    >
                       <span>🎓</span>
                       <span>ADS - UNIP 2021</span>
-                    </div>
+                      <span className="text-xl">↗</span>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -355,16 +381,19 @@ export function Portfolio() {
                 Minha Jornada
               </h3>
               <p className="text-slate-600 mb-6 leading-relaxed">
-                Com mais de 5 anos de experiência em desenvolvimento web,
-                especializei-me em criar soluções robustas e escaláveis
-                utilizando tecnologias modernas. Minha paixão por código limpo e
-                arquiteturas bem estruturadas me levou a liderar equipes e
-                projetos de alta complexidade.
+                Há mais de 4 anos atuo em tecnologia, sempre movido pela
+                curiosidade e pela vontade de transformar desafios em soluções
+                que geram valor real.
+              </p>
+              <p className="text-slate-600 mb-6 leading-relaxed">
+                Nas empresas em que passei, contribuí para estruturar sistemas,
+                otimizar processos e impulsionar resultados que refletiram
+                diretamente no crescimento dos negócios.
               </p>
               <p className="text-slate-600 mb-8 leading-relaxed">
-                Atualmente, busco me aprofundar em metodologias ágeis como
-                Scrum, gestão de projetos e liderança técnica, sempre com foco
-                em entregar valor real aos usuários e aos negócios.
+                Minha jornada é guiada pelo aprendizado contínuo e pela entrega
+                de soluções escaláveis, inovadoras e de impacto positivo para
+                pessoas e empresas.
               </p>
 
               {/* Achievements Grid */}
@@ -402,10 +431,12 @@ export function Portfolio() {
                   🎯 Objetivos Profissionais
                 </h4>
                 <ul className="space-y-2 text-slate-700">
-                  <li>• Especialização em metodologias Scrum e Agile</li>
+                  <li>• Aprimorar minhas habilidades</li>
                   <li>• Desenvolvimento de habilidades de liderança técnica</li>
                   <li>• Aprofundamento em arquitetura de sistemas complexos</li>
+                  <li>• Especialização em Inteligência Artificial</li>
                   <li>• Contribuição com projetos open source</li>
+                  <li>• Especialização em metodologias Scrum e Agile</li>
                 </ul>
               </div>
             </div>
@@ -425,11 +456,77 @@ export function Portfolio() {
               Tecnologias
             </h2>
             <p className="text-xl text-slate-600">
-              Stack tecnológico moderno para desenvolvimento full-stack
+              Stack tecnológico atualizado para desenvolvimento end-to-end
             </p>
           </div>
 
-          <div className="skills-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+          <div className="skills-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-6">
+            <h3 className="col-span-full text-center text-slate-600">
+              FRONT-END
+            </h3>
+            {TECH_STACK_FRONTEND.map((tech, index) => (
+              <div
+                key={index}
+                className="skill-card bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition-all group hover:scale-105 hover:-translate-y-1"
+              >
+                <div className="text-3xl mb-4 group-hover:scale-110 transition-transform">
+                  {tech.icon}
+                </div>
+                <h3 className="font-semibold text-slate-900 mb-2">
+                  {tech.name}
+                </h3>
+                <div className="text-xs text-slate-500 capitalize">
+                  {tech.category}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="skills-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-6 mt-6">
+            <h3 className="col-span-full text-center text-slate-600 ">
+              BACK-END
+            </h3>
+            {TECH_STACK_BACKEND.map((tech, index) => (
+              <div
+                key={index}
+                className="skill-card bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition-all group hover:scale-105 hover:-translate-y-1"
+              >
+                <div className="text-3xl mb-4 group-hover:scale-110 transition-transform">
+                  {tech.icon}
+                </div>
+                <h3 className="font-semibold text-slate-900 mb-2">
+                  {tech.name}
+                </h3>
+                <div className="text-xs text-slate-500 capitalize">
+                  {tech.category}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="skills-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-6 mt-6">
+            <h3 className="col-span-full text-center text-slate-600">
+              BANCO DE DADOS E INFRA
+            </h3>
+            {TECH_STACK_BANCO_INFRA.map((tech, index) => (
+              <div
+                key={index}
+                className="skill-card bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition-all group hover:scale-105 hover:-translate-y-1"
+              >
+                <div className="text-3xl mb-4 group-hover:scale-110 transition-transform">
+                  {tech.icon}
+                </div>
+                <h3 className="font-semibold text-slate-900 mb-2">
+                  {tech.name}
+                </h3>
+                <div className="text-xs text-slate-500 capitalize">
+                  {tech.category}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* <div className="skills-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
             {TECH_STACK.map((tech, index) => (
               <div
                 key={index}
@@ -446,7 +543,7 @@ export function Portfolio() {
                 </div>
               </div>
             ))}
-          </div>
+          </div> */}
 
           <div className="mt-16 text-center">
             <h3 className="text-xl font-semibold text-slate-900 mb-6">
