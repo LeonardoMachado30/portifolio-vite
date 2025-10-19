@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Routes } from 'react-router';
 import App from './App.tsx';
 import './index.scss';
 import { Exemplo } from './pages/Exemplo.tsx';
-import { Portfolio } from './pages/Projetos.tsx';
+import { Portfolio } from './pages/Portfolio.tsx';
 import Resume from './pages/Resume.tsx';
 
 createRoot(document.getElementById('root')!).render(

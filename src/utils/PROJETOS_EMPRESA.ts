@@ -1,4 +1,4 @@
-import type { Projeto } from '../pages/Projetos';
+import type { Projeto } from '../pages/Portfolio';
 
 export const projetosEmpresa: Projeto[] = [
   {
