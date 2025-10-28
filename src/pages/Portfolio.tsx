@@ -387,9 +387,9 @@ export function Portfolio() {
                 Minha Jornada
               </h3>
               <p className="mb-6 leading-relaxed text-slate-600 dark:text-slate-300">
-                Há mais de 4 anos atuo em tecnologia, sempre movido pela
-                curiosidade e pela vontade de transformar desafios em soluções
-                que geram valor real.
+                Há mais de 2 anos e 8 meses atuo em tecnologia, sempre movido
+                pela curiosidade e pela vontade de transformar desafios em
+                soluções que geram valor real.
               </p>
               <p className="mb-6 leading-relaxed text-slate-600 dark:text-slate-300">
                 Nas empresas em que passei, contribuí para estruturar sistemas,
